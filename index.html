@@ -1,1 +1,265 @@
-   <h1>Coming soon</h1>
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Geschichten von Unterwegs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: a calm stack of wide bands, mostly paper with two sea-blue banners; light, very large headings and lots of air. */
+:root {
+  --paper: #F5F7F4;
+  --ink: #15252E;
+  --sea: #1B4A5E;
+  --sea-ink: #EEF4F2;
+  --saffron: #D9A03A;
+  --muted: #5A6E78;
+  --tile: #E4EAE8;
+  --tile-mark: #B9C7C6;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0F1B22; --ink: #E6EDEC; --sea: #163C4D; --sea-ink: #EEF4F2;
+    --saffron: #D9A03A; --muted: #9AAEB6; --tile: #1A2A33; --tile-mark: #34505C;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0F1B22; --ink: #E6EDEC; --sea: #163C4D; --sea-ink: #EEF4F2;
+  --saffron: #D9A03A; --muted: #9AAEB6; --tile: #1A2A33; --tile-mark: #34505C;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+img { max-width: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: clamp(4.5rem, 11vw, 9rem);
+  display: grid;
+  gap: 2rem;
+}
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 200;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  margin: 0;
+}
+h2 { font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 1.02; max-width: 18ch; }
+p { margin: 0; max-width: 38rem; }
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Banners */
+.sea { background: var(--sea); color: var(--sea-ink); }
+.sea .label { color: var(--sea-ink); opacity: 0.7; }
+
+.hero .wrap { padding-block: clamp(5rem, 14vw, 11rem); gap: 2.5rem; }
+.hero h1 { font-size: clamp(3.6rem, 13vw, 10rem); line-height: 0.92; }
+.hero h1 span { display: block; color: var(--saffron); }
+.hero .lines { display: grid; gap: 0.3rem; font-size: clamp(1.25rem, 2.3vw, 1.55rem); line-height: 1.4; }
+
+/* Numbers */
+.numbers { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 2.5rem; margin-top: 1rem; }
+.num { display: grid; gap: 0.4rem; align-content: start; }
+.num strong { font-family: var(--font-display); font-weight: 200; font-size: clamp(3.4rem, 7vw, 5.2rem); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.num span { color: var(--muted); font-size: 1.1rem; line-height: 1.4; }
+
+/* Route log */
+.log { list-style: none; margin: 0; padding: 0; display: grid; }
+.log li { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1rem; padding-block: 1.1rem; border-top: 1px solid var(--tile-mark); align-items: baseline; }
+.log li:last-child { border-bottom: 1px solid var(--tile-mark); }
+.log .when { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); }
+.log .what { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; }
+.log .what small { display: block; font-family: var(--font-body); font-size: 1.05rem; color: var(--muted); margin-top: 0.15rem; }
+
+/* Gallery */
+.gallery { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.ph {
+  background: var(--tile);
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  margin: 0;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  overflow: hidden;
+}
+.ph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top right, transparent calc(50% - 0.5px), var(--tile-mark) 50%, transparent calc(50% + 0.5px)),
+    linear-gradient(to top left, transparent calc(50% - 0.5px), var(--tile-mark) 50%, transparent calc(50% + 0.5px));
+  opacity: 0.6;
+}
+.ph figcaption { position: relative; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: var(--tile); padding: 0.2rem 0.4rem; }
+.ph.a { grid-column: span 4; grid-row: span 2; aspect-ratio: auto; min-height: 20rem; }
+.ph.b, .ph.c { grid-column: span 2; }
+.ph.d, .ph.e, .ph.f { grid-column: span 2; }
+
+/* Format */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 2.5rem 2rem; margin-top: 1rem; }
+.step { display: grid; gap: 0.5rem; align-content: start; min-width: 0; }
+.step .big { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.9rem, 3.6vw, 2.5rem); line-height: 1.05; letter-spacing: -0.02em; }
+.step p { font-size: 1.1rem; color: var(--muted); }
+
+/* Statement */
+.statement h2 { max-width: 16ch; }
+.statement h2 span { display: block; color: var(--saffron); }
+.statement p { font-size: clamp(1.2rem, 2.2vw, 1.45rem); }
+
+.why p.lead { font-size: clamp(1.35rem, 2.4vw, 1.6rem); line-height: 1.45; }
+.why p.wish { font-style: italic; }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem; margin-top: 1rem; }
+.contact div { display: grid; gap: 0.4rem; min-width: 0; }
+.contact .val { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.4rem, 2.6vw, 1.8rem); overflow-wrap: anywhere; user-select: all; }
+
+footer .wrap { padding-block: 2.5rem 3.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: baseline; border-top: 1px solid var(--tile-mark); }
+footer .who { font-style: italic; color: var(--muted); }
+
+@media (max-width: 700px) {
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ph.a { grid-column: span 2; grid-row: auto; min-height: 14rem; }
+  .ph.b, .ph.c, .ph.d, .ph.e, .ph.f { grid-column: span 1; }
+  .log li { grid-template-columns: 5rem minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header class="sea hero">
+  <div class="wrap">
+    <div class="label">Schulbesuche mit Philipp Haemmerle</div>
+    <h1>Geschichten<span>von Unterwegs</span></h1>
+    <div class="lines">
+      <p>Ich erzähle Geschichten von Reisen und Abenteuern.</p>
+      <p>Ich spreche darüber, wie wichtig es ist, auf seinen Instinkt und sein Herz zu hören.</p>
+      <p>Und darüber, was geschehen kann, wenn man dem Unentdeckten in sich Raum gibt.</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="label">Wer erzählt</div>
+    <h2>Mein Name ist Philipp Haemmerle.</h2>
+    <p>Zwölf Jahre lang habe ich im Ausland gelebt und gearbeitet und bin dabei Ideen und Begegnungen gefolgt, die mich immer wieder an neue und aufregende Orte führten.</p>
+    <div class="numbers">
+      <div class="num"><strong>12</strong><span>Jahre im Ausland</span></div>
+      <div class="num"><strong>5.500</strong><span>Kilometer mit dem Fahrrad, ohne GPS und Smartphone</span></div>
+      <div class="num"><strong>4×</strong><span>mit dem Segelboot über den Atlantik</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Stationen</div>
+    <ol class="log">
+      <li><span class="when">4 Jahre</span><span class="what">USA<small>In Hotels und als Skilehrer, dann mit dem Fahrrad durch Nordamerika</small></span></li>
+      <li><span class="when">1 Jahr</span><span class="what">Indien</span></li>
+      <li><span class="when">1 Saison</span><span class="what">Japan<small>Eine Skisaison</small></span></li>
+      <li><span class="when">4 Jahre</span><span class="what">Guide und Fotograf<small>Für eines der besten Reiseunternehmen der Welt</small></span></li>
+      <li><span class="when">2 Jahre</span><span class="what">Kapstadt<small>Wo ich das Segeln für mich entdeckte</small></span></li>
+      <li><span class="when">4×</span><span class="what">Atlantik<small>Mit dem Segelboot überquert</small></span></li>
+    </ol>
+  </div>
+</section>
+
+<section aria-label="Fotos von unterwegs">
+  <div class="wrap">
+    <div class="label">Fotos von unterwegs</div>
+    <div class="gallery">
+      <figure class="ph a"><figcaption>Nordamerika · Fahrrad</figcaption></figure>
+      <figure class="ph b"><figcaption>Indien</figcaption></figure>
+      <figure class="ph c"><figcaption>Japan</figcaption></figure>
+      <figure class="ph d"><figcaption>Unterwegs als Guide</figcaption></figure>
+      <figure class="ph e"><figcaption>Kapstadt</figcaption></figure>
+      <figure class="ph f"><figcaption>Atlantik</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="sea">
+  <div class="wrap">
+    <h2>Heute besuche ich Schulen, um weiterzugeben, was ich gelernt und erlebt habe.</h2>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Zum Format</div>
+    <h2>So läuft ein Besuch ab</h2>
+    <div class="steps">
+      <div class="step"><div class="big">15 Minuten</div><p>Eine Zusammenfassung meiner Reisen und Erlebnisse, begleitet von Fotos von unterwegs.</p></div>
+      <div class="step"><div class="big">Ihre Fragen</div><p>Dann übergebe ich das Wort an die Schülerinnen und Schüler. Sie können mich alles fragen, was sie wollen.</p></div>
+      <div class="step"><div class="big">1 oder 2 Stunden</div><p>Erfahrungsgemäß lohnen sich zwei Stunden mehr.</p></div>
+      <div class="step"><div class="big">Deutsch oder Englisch</div><p>Das Gespräch kann in beiden Sprachen stattfinden.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sea statement">
+  <div class="wrap">
+    <h2>Keine Vorlesung.<span>Keine Theorie.</span></h2>
+    <p>Ich erzähle nur von selbst Erlebtem. Aus dem Vortrag wird ein Dialog über das, was die jungen Menschen wirklich interessiert. Ihre Fragen bestimmen den Verlauf, ganz gleich, wie alt sie sind und wofür sie sich begeistern.</p>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap">
+    <div class="label">Hinter den Geschichten</div>
+    <h2>Den weniger begangenen Weg wagen</h2>
+    <p class="lead">Mir geht es darum, Verantwortung für das eigene Leben zu übernehmen und Raum zu geben für das, was noch unentdeckt in einem schlummert.</p>
+    <p>Ich gebe dabei keinen Weg vor, sondern lade dazu ein, nach innen zu schauen und den eigenen zu erkunden, unabhängig davon, was Eltern, Lehrkräfte, Gleichaltrige oder die Gesellschaft für richtig halten. Neben Prüfungsdruck und anderen Erwartungen ist das eine frische Stimme und ein willkommener Ausgleich.</p>
+    <p class="wish">Ich wünsche mir, dass junge Menschen mit dem Gefühl nach Hause gehen, selbst herausfinden zu können, was sie inspiriert, was sie aufblühen lässt und wer sie in dieser Welt sein möchten.</p>
+  </div>
+</section>
+
+<section id="kontakt">
+  <div class="wrap">
+    <div class="label">Kontakt</div>
+    <h2>Ich würde Ihre Schule sehr gern besuchen.</h2>
+    <p>Alles, was ich dafür brauche, ist ein Beamer für die Fotos. Auf Altersgruppe und Zeitplan stelle ich mich gern ein.</p>
+    <div class="contact">
+      <div><span class="label">E-Mail</span><span class="val">hallo@beispiel.de</span></div>
+      <div><span class="label">Telefon</span><span class="val">+49 170 000 00 00</span></div>
+      <div><span class="label">Website</span><span class="val">www.beispiel.de</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="who">Herzliche Grüße, Philipp Haemmerle</span>
+    <span class="label">Geschichten von Unterwegs</span>
+  </div>
+</footer>
+</body>
+</html>
