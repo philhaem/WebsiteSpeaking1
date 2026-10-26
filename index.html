@@ -7,7 +7,7 @@
 <meta name="description" content="Vorträge mit Geschichten aus zwölf Jahren im Ausland. Talks with stories from twelve years abroad.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
 <link rel="preload" as="image" type="image/webp" imagesrcset="images/sailing-rio-1200.webp 1200w, images/sailing-rio-2400.webp 2400w" imagesizes="100vw">
 <style>
 :root {
@@ -18,9 +18,8 @@
   --saffron: #D9A03A;
   --muted: #5A6E78;
   --rule: #C9D4D3;
-  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
-  --font-body: "Newsreader", Georgia, "Times New Roman", serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-accent: "Newsreader", Georgia, "Times New Roman", serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -44,10 +43,12 @@ html, body { margin: 0; }
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
+  font-weight: 300;
   font-size: 1.2rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
@@ -58,27 +59,38 @@ a { color: inherit; }
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-section { padding-block: clamp(4rem, 10vw, 8rem); }
+section { padding-block: clamp(4.5rem, 11vw, 9rem); }
 h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: 200;
-  font-size: clamp(2.4rem, 6vw, 4.6rem);
-  line-height: 1.04;
-  letter-spacing: -0.025em;
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   text-wrap: balance;
   margin: 0 0 2rem;
-  max-width: 18ch;
+}
+h3 {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 1rem;
 }
 p { margin: 0 0 1.1rem; max-width: 38rem; }
 p:last-child { margin-bottom: 0; }
+
+/* Section labels: the one place a different typeface is used */
 .label {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 0 1.2rem;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  color: var(--saffron);
+  margin: 0 0 1.6rem;
 }
+.center { text-align: center; }
+.center p, .center h2 { margin-left: auto; margin-right: auto; }
 
 /* Language toggle */
 .lang-toggle {
@@ -94,9 +106,10 @@ p:last-child { margin-bottom: 0; }
   padding: 4px;
 }
 .lang-toggle button {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
   color: #fff;
   background: transparent;
   border: 0;
@@ -108,113 +121,111 @@ p:last-child { margin-bottom: 0; }
 .lang-toggle button[aria-pressed="true"] { background: #fff; color: #15252E; opacity: 1; }
 .lang-toggle button:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
 
+/* Parallax frames: the image moves slower than the page */
+.parallax { position: relative; overflow: hidden; }
+.parallax picture { position: absolute; left: 0; right: 0; top: -12%; height: 124%; will-change: transform; }
+.parallax picture img { width: 100%; height: 100%; object-fit: cover; }
+
 /* Hero */
 .hero {
-  position: relative;
   min-height: 100svh;
-  display: flex;
-  align-items: flex-end;
   color: #fff;
-  overflow: hidden;
   padding: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
-.hero picture, .hero picture img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.hero picture img { object-fit: cover; object-position: 50% 60%; }
+.hero picture { top: 0; height: 115%; }
+.hero picture img { object-position: 50% 70%; }
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(8, 16, 22, 0.78) 0%, rgba(8, 16, 22, 0.35) 45%, rgba(8, 16, 22, 0.1) 100%);
+  background: linear-gradient(to bottom, rgba(8, 16, 22, 0.6) 0%, rgba(8, 16, 22, 0.2) 45%, rgba(8, 16, 22, 0) 70%, rgba(8, 16, 22, 0.35) 100%);
+  pointer-events: none;
 }
 .hero .wrap {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding-block: clamp(6rem, 14vh, 9rem) clamp(2.5rem, 7vh, 4.5rem);
+  padding-top: clamp(5.5rem, 13vh, 9rem);
+  text-align: center;
+  will-change: transform;
 }
-.hero blockquote { margin: 0 0 2.4rem; }
+.hero blockquote { margin: 0 auto; }
 .hero blockquote p {
-  font-family: var(--font-body);
-  font-style: italic;
-  font-size: clamp(2.2rem, 6.2vw, 5rem);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  max-width: 20ch;
-  margin: 0 0 1rem;
+  font-family: var(--font-sans);
+  font-weight: 200;
+  font-size: clamp(2.2rem, 5.6vw, 4.8rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  max-width: 22ch;
+  margin: 0 auto 1.2rem;
   text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
 }
 .hero cite {
-  font-family: var(--font-mono);
-  font-style: normal;
-  font-size: 0.8rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  opacity: 0.8;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  opacity: 0.9;
 }
-.hero .intro { font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.45; max-width: 34rem; margin-bottom: 1.8rem; }
 .hero .caption {
   position: absolute;
   z-index: 1;
   right: max(16px, env(safe-area-inset-right, 0px));
   bottom: 14px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  opacity: 0.7;
+  font-size: 0.85rem;
+  opacity: 0.8;
   max-width: 60%;
   text-align: right;
   margin: 0;
 }
-.button {
-  display: inline-block;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 1.05rem;
-  text-decoration: none;
-  background: var(--saffron);
-  color: #15252E;
-  border-radius: 999px;
-  padding: 0.85rem 1.6rem;
+
+/* Intro */
+.intro-section p {
+  font-weight: 200;
+  font-size: clamp(2rem, 5.2vw, 4.2rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  max-width: 24ch;
+  text-wrap: balance;
 }
-.button:hover { filter: brightness(1.06); }
-.button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 /* What I talk about */
-.talk-lines p {
-  font-family: var(--font-display);
+.talk-lines { padding-top: 0; }
+.talk-lines .lines p {
   font-weight: 200;
   font-size: clamp(1.7rem, 4vw, 3rem);
   line-height: 1.15;
   letter-spacing: -0.02em;
   max-width: 26ch;
-  margin: 0 0 1.4rem;
+  margin: 0 auto 1.4rem;
   text-wrap: balance;
 }
 
-/* Full-width photo band */
-.band { padding: 0; }
-.band figure { margin: 0; }
-.band img { width: 100%; max-height: 88vh; object-fit: cover; }
-
 figcaption {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.95rem;
   color: var(--muted);
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
   line-height: 1.4;
 }
+
+/* Full-width photo, shown whole */
+.band { padding: 0; }
+.band figure { margin: 0; }
+.band img { width: 100%; }
 .band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
 
+/* Full-width photo with parallax */
+.band-parallax { height: min(85vh, 56vw); min-height: 22rem; padding: 0; }
+.band-caption { margin: 0.7rem 0 0; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+
 /* Places list */
-.places { list-style: none; margin: 2.5rem 0 0; padding: 0; max-width: 46rem; }
+.places { list-style: none; margin: 2.5rem auto 0; padding: 0; max-width: 46rem; }
 .places li {
-  font-family: var(--font-display);
   font-weight: 300;
   font-size: clamp(1.2rem, 2.4vw, 1.55rem);
   line-height: 1.3;
@@ -223,50 +234,46 @@ figcaption {
 }
 .places li:last-child { border-bottom: 1px solid var(--rule); }
 
-/* Gallery */
+/* Gallery: two equal columns, every image the same shape, so nothing leaves a gap */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin-top: clamp(3rem, 7vw, 5rem);
+  text-align: left;
 }
 .gallery figure { margin: 0; min-width: 0; }
 .gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
-.gallery .wide { grid-column: span 4; }
-.gallery .wide img { aspect-ratio: auto; height: 100%; }
-.gallery .narrow { grid-column: span 2; }
-.gallery .half { grid-column: span 3; }
-@media (max-width: 720px) {
-  .gallery { grid-template-columns: minmax(0, 1fr); }
-  .gallery .wide, .gallery .narrow, .gallery .half { grid-column: auto; }
-  .gallery .wide img { aspect-ratio: 3 / 2; height: auto; }
-}
+@media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
 
 /* Found */
 .found { background: var(--sea); color: var(--sea-ink); }
-.found .label { color: var(--sea-ink); opacity: 0.7; }
-.found p { font-size: clamp(1.3rem, 2.4vw, 1.65rem); line-height: 1.5; max-width: 40rem; }
+.found p { font-size: clamp(1.35rem, 2.4vw, 1.7rem); line-height: 1.5; max-width: 40rem; }
 
-/* Two columns */
-.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: clamp(2rem, 5vw, 4rem); }
-.cols h3 {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: 1.6rem;
-  margin: 0 0 0.8rem;
-}
+/* Longer text stays left-aligned for easy reading, in a centred column */
+.format .wrap > div[lang], .audience { text-align: left; max-width: 38rem; margin-inline: auto; }
+
+/* Schools, then companies */
+.audience { margin-top: clamp(3.5rem, 8vw, 6rem); }
 
 /* About */
 .about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 .about-grid figure { margin: 0; }
-.about-grid .roles { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.7rem); line-height: 1.3; margin-bottom: 1.4rem; }
+.about-grid .roles { font-weight: 300; font-size: clamp(1.4rem, 2.8vw, 1.9rem); line-height: 1.25; margin-bottom: 1.4rem; }
 @media (max-width: 720px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* Contact */
 .contact { border-top: 1px solid var(--rule); }
-.contact .details { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin-top: 2rem; }
-.contact .details a { text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+.contact .details { font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin-top: 2rem; }
+footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
+
+/* Gentle text motion while scrolling */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .parallax picture, .hero .wrap { transform: none !important; }
+}
 </style>
 </head>
 <body>
@@ -276,7 +283,7 @@ footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.7
   <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
 </nav>
 
-<header class="hero">
+<header class="hero parallax">
   <picture>
     <source type="image/webp" srcset="images/sailing-rio-1200.webp 1200w, images/sailing-rio-2400.webp 2400w" sizes="100vw">
     <img src="images/sailing-rio-1200.jpg" srcset="images/sailing-rio-1200.jpg 1200w, images/sailing-rio-2400.jpg 2400w" sizes="100vw" width="1200" height="742" alt="" fetchpriority="high">
@@ -287,24 +294,28 @@ footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.7
       <p lang="en">“A ship in harbor is safe, but that is not what ships are built for.”</p>
       <cite>John A. Shedd</cite>
     </blockquote>
-    <p class="intro" lang="de">Ich bin Philipp Haemmerle. Ich erzähle Geschichten aus zwölf Jahren, in denen ich im Ausland gelebt, gearbeitet und gereist bin.</p>
-    <p class="intro" lang="en">I'm Phil Haemmerle. I tell stories from twelve years of living, working and travelling abroad.</p>
-    <a class="button" href="#contact"><span lang="de">Vortrag anfragen</span><span lang="en">Invite me to speak</span></a>
   </div>
   <p class="caption"><span lang="de">Einfahrt nach Rio de Janeiro nach drei Wochen auf See</span><span lang="en">Sailing into Rio de Janeiro after three weeks at sea</span></p>
 </header>
 
 <main>
 
+<section class="intro-section">
+  <div class="wrap center">
+    <p lang="de">Ich bin Philipp Haemmerle. Ich erzähle Geschichten aus zwölf Jahren, in denen ich im Ausland gelebt, gearbeitet und gereist bin.</p>
+    <p lang="en">I'm Phil Haemmerle. I tell stories from twelve years of living, working and travelling abroad.</p>
+  </div>
+</section>
+
 <section class="talk-lines">
-  <div class="wrap">
+  <div class="wrap center">
     <p class="label"><span lang="de">Worüber ich spreche</span><span lang="en">What I talk about</span></p>
-    <div lang="de">
+    <div class="lines" lang="de">
       <p>Ich erzähle Geschichten von Reisen und Abenteuern.</p>
       <p>Ich spreche darüber, wie wichtig es ist, auf seinen Instinkt und sein Herz zu hören.</p>
       <p>Und darüber, was geschehen kann, wenn man dem Unentdeckten in sich Raum gibt.</p>
     </div>
-    <div lang="en">
+    <div class="lines" lang="en">
       <p>I tell stories of travel and adventure.</p>
       <p>I talk about how important it is to listen to your instinct and your heart.</p>
       <p>And about what can happen when you make room for what's still undiscovered in you.</p>
@@ -323,7 +334,7 @@ footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.7
 </section>
 
 <section class="places-section">
-  <div class="wrap">
+  <div class="wrap center">
     <p class="label"><span lang="de">Orte und Erfahrungen im Überblick</span><span lang="en">A quick overview of places and experiences</span></p>
     <h2><span lang="de">Zwölf Jahre im Ausland</span><span lang="en">Twelve years abroad</span></h2>
     <p lang="de">Zwölf Jahre lang habe ich im Ausland gelebt und gearbeitet und bin dabei dem gefolgt, was mich bewegt und inspiriert hat, wohin auch immer es führte.</p>
@@ -351,28 +362,28 @@ footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.7
     </ul>
 
     <div class="gallery">
-      <figure class="wide">
+      <figure>
         <picture>
           <source type="image/webp" srcset="images/skiing-couloir-1200.webp 1200w, images/skiing-couloir-2400.webp 2400w" sizes="(max-width: 720px) 100vw, 66vw">
           <img src="images/skiing-couloir-1200.jpg" srcset="images/skiing-couloir-1200.jpg 1200w, images/skiing-couloir-2400.jpg 2400w" sizes="(max-width: 720px) 100vw, 66vw" width="1200" height="800" alt="" loading="lazy">
         </picture>
         <figcaption><span lang="de">Kurz vor der Einfahrt in ein Couloir in den Rocky Mountains</span><span lang="en">About to drop into a couloir in the Rocky Mountains</span></figcaption>
       </figure>
-      <figure class="narrow">
+      <figure>
         <picture>
           <source type="image/webp" srcset="images/india-1200.webp 1200w" sizes="(max-width: 720px) 100vw, 33vw">
           <img src="images/india-1200.jpg" width="1200" height="800" alt="" loading="lazy">
         </picture>
         <figcaption><span lang="de">Goldener Tempel, Amritsar</span><span lang="en">Golden Temple, Amritsar</span></figcaption>
       </figure>
-      <figure class="half">
+      <figure>
         <picture>
           <source type="image/webp" srcset="images/volcano-grindavik-1200.webp 1200w, images/volcano-grindavik-2400.webp 2400w" sizes="(max-width: 720px) 100vw, 50vw">
           <img src="images/volcano-grindavik-1200.jpg" srcset="images/volcano-grindavik-1200.jpg 1200w, images/volcano-grindavik-2400.jpg 2400w" sizes="(max-width: 720px) 100vw, 50vw" width="1200" height="900" alt="" loading="lazy">
         </picture>
         <figcaption><span lang="de">Ausbrechender Vulkan bei Grindavík, Island</span><span lang="en">Erupting volcano at Grindavík, Iceland</span></figcaption>
       </figure>
-      <figure class="half">
+      <figure>
         <picture>
           <source type="image/webp" srcset="images/sailing-saldanha-1200.webp 1200w, images/sailing-saldanha-2400.webp 2400w" sizes="(max-width: 720px) 100vw, 50vw">
           <img src="images/sailing-saldanha-1200.jpg" srcset="images/sailing-saldanha-1200.jpg 1200w, images/sailing-saldanha-2400.jpg 2400w" sizes="(max-width: 720px) 100vw, 50vw" width="1200" height="900" alt="" loading="lazy">
@@ -397,18 +408,16 @@ footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.7
   </div>
 </section>
 
-<section class="band">
-  <figure>
-    <picture>
-      <source type="image/webp" srcset="images/skiing-austria-1200.webp 1200w, images/skiing-austria-2400.webp 2400w" sizes="100vw">
-      <img src="images/skiing-austria-1200.jpg" srcset="images/skiing-austria-1200.jpg 1200w, images/skiing-austria-2400.jpg 2400w" sizes="100vw" width="1200" height="759" alt="" loading="lazy">
-    </picture>
-    <figcaption><span lang="de">Ein Traumtag in Österreich</span><span lang="en">A dream day in Austria</span></figcaption>
-  </figure>
+<section class="band-parallax parallax" aria-label="">
+  <picture>
+    <source type="image/webp" srcset="images/skiing-austria-1200.webp 1200w, images/skiing-austria-2400.webp 2400w" sizes="100vw">
+    <img src="images/skiing-austria-1200.jpg" srcset="images/skiing-austria-1200.jpg 1200w, images/skiing-austria-2400.jpg 2400w" sizes="100vw" width="1200" height="759" alt="" loading="lazy">
+  </picture>
 </section>
+<div class="band-caption"><figcaption style="margin:0"><span lang="de">Ein Traumtag in Österreich</span><span lang="en">A dream day in Austria</span></figcaption></div>
 
 <section class="format">
-  <div class="wrap">
+  <div class="wrap center">
     <p class="label"><span lang="de">So läuft ein Vortrag ab</span><span lang="en">How a talk works</span></p>
     <h2><span lang="de">Erst die Geschichten, dann Ihre Fragen</span><span lang="en">Stories first, then your questions</span></h2>
     <div lang="de">
@@ -420,17 +429,16 @@ footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.7
       <p>Every talk is adjusted to the audience, from a class of teenagers to a team at work. A visit can take from one to two hours, though two hours usually works better. In German or English. All I need is a projector for the photos.</p>
     </div>
 
-    <div class="cols" style="margin-top: clamp(3rem, 7vw, 5rem);">
-      <div>
+    <div class="audience">
         <h3><span lang="de">Für Schulen</span><span lang="en">For schools</span></h3>
         <p lang="de">Neben den Erwartungen, die junge Menschen an sich selbst haben und die ihr Umfeld an sie stellt, bringe ich eine andere Stimme mit neuen Ideen. Ich gebe keinen Weg vor. Ich lade junge Menschen ein, nach innen zu schauen und ihren eigenen zu finden.</p>
         <p lang="en">Next to expectations from themselves and their surroundings, I bring a different voice with new ideas. I don't suggest a path. I invite young people to look inward and find their own.</p>
-      </div>
-      <div>
+    </div>
+    <div class="audience">
         <h3><span lang="de">Für Unternehmen</span><span lang="en">For companies</span></h3>
         <p lang="de">Das Gespräch zwischen Kopf und Herz hört nach der Schule nicht auf. Eigentlich hört es nie auf, es begleitet uns ein Leben lang. Jeder, den ich kenne, hat Ideen oder Entscheidungen, die er immer wieder aufschiebt. Meine Vorträge sind eine Einladung, sie ernst zu nehmen und zu sehen, wohin Vertrauen führen kann. Und wer sich darauf nicht einlassen möchte, kann sich von den Geschichten auch einfach gut unterhalten lassen.</p>
         <p lang="en">The conversation between head and heart doesn't stop after school. In fact, it never stops. It stays with us all our lives. Everyone I know has ideas or decisions they keep putting off. My talks are an invitation to take those seriously, and to see what trust can lead to. And if you don't want to go there, you can just be flat-out entertained by the stories.</p>
-      </div>
+      
     </div>
   </div>
 </section>
@@ -496,6 +504,51 @@ footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.7
   document.querySelectorAll("[data-set-lang]").forEach(function (b) {
     b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
   });
+})();
+
+// Parallax: photos move slower than the text
+(function () {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var frames = Array.prototype.slice.call(document.querySelectorAll(".parallax"));
+  var heroText = document.querySelector(".hero .wrap");
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    frames.forEach(function (f) {
+      var r = f.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var pic = f.querySelector("picture");
+      if (!pic) return;
+      var shift;
+      if (f.classList.contains("hero")) {
+        shift = -r.top * 0.45;            // hero photo lags behind the page
+      } else {
+        var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+        shift = progress * r.height * 0.1;
+      }
+      pic.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
+    });
+    if (heroText) {
+      var y = Math.min(window.scrollY, vh);
+      heroText.style.transform = "translate3d(0," + (-y * 0.15).toFixed(1) + "px,0)";
+      heroText.style.opacity = String(Math.max(0, 1 - y / (vh * 0.8)));
+    }
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+
+// Text and photos ease in as they scroll into view
+(function () {
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var els = document.querySelectorAll("main .label, main h2, main h3, main p, .places li, .gallery figure, .about-grid figure");
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  els.forEach(function (el) { el.classList.add("reveal"); io.observe(el); });
 })();
 </script>
 </body>
