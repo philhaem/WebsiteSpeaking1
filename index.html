@@ -1,14 +1,15 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Geschichten von Unterwegs</title>
+<title>Philipp Haemmerle · Geschichten von unterwegs</title>
+<meta name="description" content="Vorträge mit Geschichten aus zwölf Jahren im Ausland. Talks with stories from twelve years abroad.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=IBM+Plex+Mono:wght@400&display=swap">
+<link rel="preload" as="image" type="image/webp" imagesrcset="images/sailing-rio-1200.webp 1200w, images/sailing-rio-2400.webp 2400w" imagesizes="100vw">
 <style>
-/* Layout: a calm stack of wide bands, mostly paper with two sea-blue banners; light, very large headings and lots of air. */
 :root {
   --paper: #F5F7F4;
   --ink: #15252E;
@@ -16,8 +17,7 @@
   --sea-ink: #EEF4F2;
   --saffron: #D9A03A;
   --muted: #5A6E78;
-  --tile: #E4EAE8;
-  --tile-mark: #B9C7C6;
+  --rule: #C9D4D3;
   --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Newsreader", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
@@ -25,241 +25,478 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #0F1B22; --ink: #E6EDEC; --sea: #163C4D; --sea-ink: #EEF4F2;
-    --saffron: #D9A03A; --muted: #9AAEB6; --tile: #1A2A33; --tile-mark: #34505C;
+    --muted: #9AAEB6; --rule: #2C434E;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0F1B22; --ink: #E6EDEC; --sea: #163C4D; --sea-ink: #EEF4F2;
-  --saffron: #D9A03A; --muted: #9AAEB6; --tile: #1A2A33; --tile-mark: #34505C;
+  --muted: #9AAEB6; --rule: #2C434E;
   color-scheme: dark;
 }
 
+/* Language switching: only the active language is shown */
+html[data-lang="de"] body [lang="en"],
+html[data-lang="en"] body [lang="de"] { display: none !important; }
+
 * { box-sizing: border-box; }
 html, body { margin: 0; }
-img { max-width: 100%; }
 body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1.2rem;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+
 .wrap {
   max-width: 70rem;
   margin: 0 auto;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: clamp(4.5rem, 11vw, 9rem);
-  display: grid;
-  gap: 2rem;
 }
-h1, h2 {
+section { padding-block: clamp(4rem, 10vw, 8rem); }
+h2 {
   font-family: var(--font-display);
   font-weight: 200;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  line-height: 1.04;
   letter-spacing: -0.025em;
   text-wrap: balance;
-  margin: 0;
+  margin: 0 0 2rem;
+  max-width: 18ch;
 }
-h2 { font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 1.02; max-width: 18ch; }
-p { margin: 0; max-width: 38rem; }
+p { margin: 0 0 1.1rem; max-width: 38rem; }
+p:last-child { margin-bottom: 0; }
 .label {
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
+  margin: 0 0 1.2rem;
 }
 
-/* Banners */
-.sea { background: var(--sea); color: var(--sea-ink); }
-.sea .label { color: var(--sea-ink); opacity: 0.7; }
+/* Language toggle */
+.lang-toggle {
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
+  z-index: 10;
+  display: flex;
+  border-radius: 999px;
+  background: rgba(10, 20, 26, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px;
+}
+.lang-toggle button {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  opacity: 0.75;
+}
+.lang-toggle button[aria-pressed="true"] { background: #fff; color: #15252E; opacity: 1; }
+.lang-toggle button:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
 
-.hero .wrap { padding-block: clamp(5rem, 14vw, 11rem); gap: 2.5rem; }
-.hero h1 { font-size: clamp(3.6rem, 13vw, 10rem); line-height: 0.92; }
-.hero h1 span { display: block; color: var(--saffron); }
-.hero .lines { display: grid; gap: 0.3rem; font-size: clamp(1.25rem, 2.3vw, 1.55rem); line-height: 1.4; }
-
-/* Numbers */
-.numbers { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 2.5rem; margin-top: 1rem; }
-.num { display: grid; gap: 0.4rem; align-content: start; }
-.num strong { font-family: var(--font-display); font-weight: 200; font-size: clamp(3.4rem, 7vw, 5.2rem); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
-.num span { color: var(--muted); font-size: 1.1rem; line-height: 1.4; }
-
-/* Route log */
-.log { list-style: none; margin: 0; padding: 0; display: grid; }
-.log li { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1rem; padding-block: 1.1rem; border-top: 1px solid var(--tile-mark); align-items: baseline; }
-.log li:last-child { border-bottom: 1px solid var(--tile-mark); }
-.log .when { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); }
-.log .what { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; }
-.log .what small { display: block; font-family: var(--font-body); font-size: 1.05rem; color: var(--muted); margin-top: 0.15rem; }
-
-/* Gallery */
-.gallery { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-.ph {
-  background: var(--tile);
-  aspect-ratio: 4 / 3;
-  max-width: 100%;
-  margin: 0;
+/* Hero */
+.hero {
   position: relative;
+  min-height: 100svh;
   display: flex;
   align-items: flex-end;
-  padding: 1rem;
+  color: #fff;
   overflow: hidden;
+  padding: 0;
 }
-.ph::before {
+.hero picture, .hero picture img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero picture img { object-fit: cover; object-position: 50% 60%; }
+.hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(to top right, transparent calc(50% - 0.5px), var(--tile-mark) 50%, transparent calc(50% + 0.5px)),
-    linear-gradient(to top left, transparent calc(50% - 0.5px), var(--tile-mark) 50%, transparent calc(50% + 0.5px));
-  opacity: 0.6;
+  background: linear-gradient(to top, rgba(8, 16, 22, 0.78) 0%, rgba(8, 16, 22, 0.35) 45%, rgba(8, 16, 22, 0.1) 100%);
 }
-.ph figcaption { position: relative; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: var(--tile); padding: 0.2rem 0.4rem; }
-.ph.a { grid-column: span 4; grid-row: span 2; aspect-ratio: auto; min-height: 20rem; }
-.ph.b, .ph.c { grid-column: span 2; }
-.ph.d, .ph.e, .ph.f { grid-column: span 2; }
+.hero .wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-block: clamp(6rem, 14vh, 9rem) clamp(2.5rem, 7vh, 4.5rem);
+}
+.hero blockquote { margin: 0 0 2.4rem; }
+.hero blockquote p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: clamp(2.2rem, 6.2vw, 5rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  max-width: 20ch;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+.hero cite {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.hero .intro { font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.45; max-width: 34rem; margin-bottom: 1.8rem; }
+.hero .caption {
+  position: absolute;
+  z-index: 1;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  max-width: 60%;
+  text-align: right;
+  margin: 0;
+}
+.button {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.05rem;
+  text-decoration: none;
+  background: var(--saffron);
+  color: #15252E;
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+}
+.button:hover { filter: brightness(1.06); }
+.button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
-/* Format */
-.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 2.5rem 2rem; margin-top: 1rem; }
-.step { display: grid; gap: 0.5rem; align-content: start; min-width: 0; }
-.step .big { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.9rem, 3.6vw, 2.5rem); line-height: 1.05; letter-spacing: -0.02em; }
-.step p { font-size: 1.1rem; color: var(--muted); }
+/* What I talk about */
+.talk-lines p {
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 26ch;
+  margin: 0 0 1.4rem;
+  text-wrap: balance;
+}
 
-/* Statement */
-.statement h2 { max-width: 16ch; }
-.statement h2 span { display: block; color: var(--saffron); }
-.statement p { font-size: clamp(1.2rem, 2.2vw, 1.45rem); }
+/* Full-width photo band */
+.band { padding: 0; }
+.band figure { margin: 0; }
+.band img { width: 100%; max-height: 88vh; object-fit: cover; }
 
-.why p.lead { font-size: clamp(1.35rem, 2.4vw, 1.6rem); line-height: 1.45; }
-.why p.wish { font-style: italic; }
+figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: 0.6rem;
+  line-height: 1.4;
+}
+.band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+
+/* Places list */
+.places { list-style: none; margin: 2.5rem 0 0; padding: 0; max-width: 46rem; }
+.places li {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  line-height: 1.3;
+  padding-block: 1rem;
+  border-top: 1px solid var(--rule);
+}
+.places li:last-child { border-bottom: 1px solid var(--rule); }
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+.gallery figure { margin: 0; min-width: 0; }
+.gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.gallery .wide { grid-column: span 4; }
+.gallery .wide img { aspect-ratio: auto; height: 100%; }
+.gallery .narrow { grid-column: span 2; }
+.gallery .half { grid-column: span 3; }
+@media (max-width: 720px) {
+  .gallery { grid-template-columns: minmax(0, 1fr); }
+  .gallery .wide, .gallery .narrow, .gallery .half { grid-column: auto; }
+  .gallery .wide img { aspect-ratio: 3 / 2; height: auto; }
+}
+
+/* Found */
+.found { background: var(--sea); color: var(--sea-ink); }
+.found .label { color: var(--sea-ink); opacity: 0.7; }
+.found p { font-size: clamp(1.3rem, 2.4vw, 1.65rem); line-height: 1.5; max-width: 40rem; }
+
+/* Two columns */
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: clamp(2rem, 5vw, 4rem); }
+.cols h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.6rem;
+  margin: 0 0 0.8rem;
+}
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.about-grid figure { margin: 0; }
+.about-grid .roles { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.7rem); line-height: 1.3; margin-bottom: 1.4rem; }
+@media (max-width: 720px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* Contact */
-.contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem; margin-top: 1rem; }
-.contact div { display: grid; gap: 0.4rem; min-width: 0; }
-.contact .val { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.4rem, 2.6vw, 1.8rem); overflow-wrap: anywhere; user-select: all; }
-
-footer .wrap { padding-block: 2.5rem 3.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: baseline; border-top: 1px solid var(--tile-mark); }
-footer .who { font-style: italic; color: var(--muted); }
-
-@media (max-width: 700px) {
-  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ph.a { grid-column: span 2; grid-row: auto; min-height: 14rem; }
-  .ph.b, .ph.c, .ph.d, .ph.e, .ph.f { grid-column: span 1; }
-  .log li { grid-template-columns: 5rem minmax(0, 1fr); }
-}
+.contact { border-top: 1px solid var(--rule); }
+.contact .details { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin-top: 2rem; }
+.contact .details a { text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+footer { padding-block: 2rem 3rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
 </style>
 </head>
 <body>
 
-<header class="sea hero">
+<nav class="lang-toggle" aria-label="Sprache / Language">
+  <button type="button" data-set-lang="de" aria-pressed="true">DE</button>
+  <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+</nav>
+
+<header class="hero">
+  <picture>
+    <source type="image/webp" srcset="images/sailing-rio-1200.webp 1200w, images/sailing-rio-2400.webp 2400w" sizes="100vw">
+    <img src="images/sailing-rio-1200.jpg" srcset="images/sailing-rio-1200.jpg 1200w, images/sailing-rio-2400.jpg 2400w" sizes="100vw" width="1200" height="742" alt="" fetchpriority="high">
+  </picture>
   <div class="wrap">
-    <div class="label">Schulbesuche mit Philipp Haemmerle</div>
-    <h1>Geschichten<span>von Unterwegs</span></h1>
-    <div class="lines">
+    <blockquote>
+      <p lang="de">„Ein Schiff im Hafen ist sicher, aber dafür werden Schiffe nicht gebaut.“</p>
+      <p lang="en">“A ship in harbor is safe, but that is not what ships are built for.”</p>
+      <cite>John A. Shedd</cite>
+    </blockquote>
+    <p class="intro" lang="de">Ich bin Philipp Haemmerle. Ich erzähle Geschichten aus zwölf Jahren, in denen ich im Ausland gelebt, gearbeitet und gereist bin.</p>
+    <p class="intro" lang="en">I'm Phil Haemmerle. I tell stories from twelve years of living, working and travelling abroad.</p>
+    <a class="button" href="#contact"><span lang="de">Vortrag anfragen</span><span lang="en">Invite me to speak</span></a>
+  </div>
+  <p class="caption"><span lang="de">Einfahrt nach Rio de Janeiro nach drei Wochen auf See</span><span lang="en">Sailing into Rio de Janeiro after three weeks at sea</span></p>
+</header>
+
+<main>
+
+<section class="talk-lines">
+  <div class="wrap">
+    <p class="label"><span lang="de">Worüber ich spreche</span><span lang="en">What I talk about</span></p>
+    <div lang="de">
       <p>Ich erzähle Geschichten von Reisen und Abenteuern.</p>
       <p>Ich spreche darüber, wie wichtig es ist, auf seinen Instinkt und sein Herz zu hören.</p>
       <p>Und darüber, was geschehen kann, wenn man dem Unentdeckten in sich Raum gibt.</p>
     </div>
-  </div>
-</header>
-
-<section>
-  <div class="wrap">
-    <div class="label">Wer erzählt</div>
-    <h2>Mein Name ist Philipp Haemmerle.</h2>
-    <p>Zwölf Jahre lang habe ich im Ausland gelebt und gearbeitet und bin dabei Ideen und Begegnungen gefolgt, die mich immer wieder an neue und aufregende Orte führten.</p>
-    <div class="numbers">
-      <div class="num"><strong>12</strong><span>Jahre im Ausland</span></div>
-      <div class="num"><strong>5.500</strong><span>Kilometer mit dem Fahrrad, ohne GPS und Smartphone</span></div>
-      <div class="num"><strong>4×</strong><span>mit dem Segelboot über den Atlantik</span></div>
+    <div lang="en">
+      <p>I tell stories of travel and adventure.</p>
+      <p>I talk about how important it is to listen to your instinct and your heart.</p>
+      <p>And about what can happen when you make room for what's still undiscovered in you.</p>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="label">Stationen</div>
-    <ol class="log">
-      <li><span class="when">4 Jahre</span><span class="what">USA<small>In Hotels und als Skilehrer, dann mit dem Fahrrad durch Nordamerika</small></span></li>
-      <li><span class="when">1 Jahr</span><span class="what">Indien</span></li>
-      <li><span class="when">1 Saison</span><span class="what">Japan<small>Eine Skisaison</small></span></li>
-      <li><span class="when">4 Jahre</span><span class="what">Guide und Fotograf<small>Für eines der besten Reiseunternehmen der Welt</small></span></li>
-      <li><span class="when">2 Jahre</span><span class="what">Kapstadt<small>Wo ich das Segeln für mich entdeckte</small></span></li>
-      <li><span class="when">4×</span><span class="what">Atlantik<small>Mit dem Segelboot überquert</small></span></li>
-    </ol>
-  </div>
+<section class="band">
+  <figure>
+    <picture>
+      <source type="image/webp" srcset="images/sailing-iceland-ireland-1200.webp 1200w, images/sailing-iceland-ireland-2400.webp 2400w" sizes="100vw">
+      <img src="images/sailing-iceland-ireland-1200.jpg" srcset="images/sailing-iceland-ireland-1200.jpg 1200w, images/sailing-iceland-ireland-2400.jpg 2400w" sizes="100vw" width="1200" height="900" alt="" loading="lazy">
+    </picture>
+    <figcaption><span lang="de">Auf halbem Weg von Island nach Irland</span><span lang="en">Halfway from Iceland to Ireland</span></figcaption>
+  </figure>
 </section>
 
-<section aria-label="Fotos von unterwegs">
+<section class="places-section">
   <div class="wrap">
-    <div class="label">Fotos von unterwegs</div>
+    <p class="label"><span lang="de">Orte und Erfahrungen im Überblick</span><span lang="en">A quick overview of places and experiences</span></p>
+    <h2><span lang="de">Zwölf Jahre im Ausland</span><span lang="en">Twelve years abroad</span></h2>
+    <p lang="de">Zwölf Jahre lang habe ich im Ausland gelebt und gearbeitet und bin dabei dem gefolgt, was mich bewegt und inspiriert hat, wohin auch immer es führte.</p>
+    <p lang="en">For twelve years I lived and worked abroad, following what moved and inspired me wherever that led.</p>
+
+    <ul class="places" lang="de">
+      <li>Vier Jahre in den USA, in Hotels und als Skilehrer.</li>
+      <li>Allein und ohne Unterstützung mit dem Fahrrad quer durch Nordamerika.</li>
+      <li>Ein Jahr auf Reisen in Indien.</li>
+      <li>Sechs Monate Skifahren in Japan.</li>
+      <li>Vier Jahre als Guide und Fotograf für eines der besten Reiseunternehmen der Welt, mit Reisen rund um den Globus.</li>
+      <li>Zwei Jahre in Kapstadt, wo ich das Segeln für mich entdeckt habe.</li>
+      <li>Vier Atlantiküberquerungen und viele weitere Abenteuer mit dem Segelboot.</li>
+      <li>21 Tage im Dschungel ohne Essen.</li>
+    </ul>
+    <ul class="places" lang="en">
+      <li>Four years in the USA, working in hotels and as a ski instructor.</li>
+      <li>Crossing North America by bike, solo and unaided.</li>
+      <li>A year of travels in India.</li>
+      <li>Six months of skiing in Japan.</li>
+      <li>Four years as a guide and photographer for one of the best travel companies in the world, leading trips around the globe.</li>
+      <li>Two years in Cape Town, where I discovered sailing.</li>
+      <li>Four Atlantic crossings and many other adventures by sailboat.</li>
+      <li>21 days in the jungle without food.</li>
+    </ul>
+
     <div class="gallery">
-      <figure class="ph a"><figcaption>Nordamerika · Fahrrad</figcaption></figure>
-      <figure class="ph b"><figcaption>Indien</figcaption></figure>
-      <figure class="ph c"><figcaption>Japan</figcaption></figure>
-      <figure class="ph d"><figcaption>Unterwegs als Guide</figcaption></figure>
-      <figure class="ph e"><figcaption>Kapstadt</figcaption></figure>
-      <figure class="ph f"><figcaption>Atlantik</figcaption></figure>
+      <figure class="wide">
+        <picture>
+          <source type="image/webp" srcset="images/skiing-couloir-1200.webp 1200w, images/skiing-couloir-2400.webp 2400w" sizes="(max-width: 720px) 100vw, 66vw">
+          <img src="images/skiing-couloir-1200.jpg" srcset="images/skiing-couloir-1200.jpg 1200w, images/skiing-couloir-2400.jpg 2400w" sizes="(max-width: 720px) 100vw, 66vw" width="1200" height="800" alt="" loading="lazy">
+        </picture>
+        <figcaption><span lang="de">Kurz vor der Einfahrt in ein Couloir in den Rocky Mountains</span><span lang="en">About to drop into a couloir in the Rocky Mountains</span></figcaption>
+      </figure>
+      <figure class="narrow">
+        <picture>
+          <source type="image/webp" srcset="images/india-1200.webp 1200w" sizes="(max-width: 720px) 100vw, 33vw">
+          <img src="images/india-1200.jpg" width="1200" height="800" alt="" loading="lazy">
+        </picture>
+        <figcaption><span lang="de">Goldener Tempel, Amritsar</span><span lang="en">Golden Temple, Amritsar</span></figcaption>
+      </figure>
+      <figure class="half">
+        <picture>
+          <source type="image/webp" srcset="images/volcano-grindavik-1200.webp 1200w, images/volcano-grindavik-2400.webp 2400w" sizes="(max-width: 720px) 100vw, 50vw">
+          <img src="images/volcano-grindavik-1200.jpg" srcset="images/volcano-grindavik-1200.jpg 1200w, images/volcano-grindavik-2400.jpg 2400w" sizes="(max-width: 720px) 100vw, 50vw" width="1200" height="900" alt="" loading="lazy">
+        </picture>
+        <figcaption><span lang="de">Ausbrechender Vulkan bei Grindavík, Island</span><span lang="en">Erupting volcano at Grindavík, Iceland</span></figcaption>
+      </figure>
+      <figure class="half">
+        <picture>
+          <source type="image/webp" srcset="images/sailing-saldanha-1200.webp 1200w, images/sailing-saldanha-2400.webp 2400w" sizes="(max-width: 720px) 100vw, 50vw">
+          <img src="images/sailing-saldanha-1200.jpg" srcset="images/sailing-saldanha-1200.jpg 1200w, images/sailing-saldanha-2400.jpg 2400w" sizes="(max-width: 720px) 100vw, 50vw" width="1200" height="900" alt="" loading="lazy">
+        </picture>
+        <figcaption><span lang="de">Aufwachen zum Sonnenuntergang in der Saldanha Bay, Südafrika</span><span lang="en">Waking up to a sunset in Saldanha Bay, South Africa</span></figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<section class="sea">
+<section class="found">
   <div class="wrap">
-    <h2>Heute besuche ich Schulen, um weiterzugeben, was ich gelernt und erlebt habe.</h2>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="label">Zum Format</div>
-    <h2>So läuft ein Besuch ab</h2>
-    <div class="steps">
-      <div class="step"><div class="big">15 Minuten</div><p>Eine Zusammenfassung meiner Reisen und Erlebnisse, begleitet von Fotos von unterwegs.</p></div>
-      <div class="step"><div class="big">Ihre Fragen</div><p>Dann übergebe ich das Wort an die Schülerinnen und Schüler. Sie können mich alles fragen, was sie wollen.</p></div>
-      <div class="step"><div class="big">1 oder 2 Stunden</div><p>Erfahrungsgemäß lohnen sich zwei Stunden mehr.</p></div>
-      <div class="step"><div class="big">Deutsch oder Englisch</div><p>Das Gespräch kann in beiden Sprachen stattfinden.</p></div>
+    <p class="label"><span lang="de">Was ich erlebt habe</span><span lang="en">What I've found</span></p>
+    <div lang="de">
+      <p>Wenn ich Entscheidungen aus dem heraus getroffen habe, was mich tief bewegt, was mich inspiriert oder was mich einfach begeistert hat, ist dadurch Raum für so viele Möglichkeiten entstanden. Und wenn ich offen dafür war, sind sehr unerwartete und wunderbare Dinge passiert.</p>
+      <p>Das, wovor ich Angst hatte, ist meiner Erfahrung nach meistens gar nicht eingetreten. Stattdessen ist etwas ganz anderes passiert. Es hat mich zu einigen der bedeutsamsten und wundervollsten Reisen und Erlebnisse meines Lebens geführt, und genau das möchte ich teilen.</p>
+    </div>
+    <div lang="en">
+      <p>When I've made a decision based on what moved me deeply, what inspired me, or simply what I felt excited about, it made room for so much possibility. And when I was open to it, very unexpected and amazing things happened.</p>
+      <p>In my experience, the things I was afraid of usually never came to pass. Something else entirely happened instead. It has led to some of the most meaningful and wondrous journeys and experiences of my life, and that's what I want to share.</p>
     </div>
   </div>
 </section>
 
-<section class="sea statement">
-  <div class="wrap">
-    <h2>Keine Vorlesung.<span>Keine Theorie.</span></h2>
-    <p>Ich erzähle nur von selbst Erlebtem. Aus dem Vortrag wird ein Dialog über das, was die jungen Menschen wirklich interessiert. Ihre Fragen bestimmen den Verlauf, ganz gleich, wie alt sie sind und wofür sie sich begeistern.</p>
-  </div>
+<section class="band">
+  <figure>
+    <picture>
+      <source type="image/webp" srcset="images/skiing-austria-1200.webp 1200w, images/skiing-austria-2400.webp 2400w" sizes="100vw">
+      <img src="images/skiing-austria-1200.jpg" srcset="images/skiing-austria-1200.jpg 1200w, images/skiing-austria-2400.jpg 2400w" sizes="100vw" width="1200" height="759" alt="" loading="lazy">
+    </picture>
+    <figcaption><span lang="de">Ein Traumtag in Österreich</span><span lang="en">A dream day in Austria</span></figcaption>
+  </figure>
 </section>
 
-<section class="why">
+<section class="format">
   <div class="wrap">
-    <div class="label">Hinter den Geschichten</div>
-    <h2>Den weniger begangenen Weg wagen</h2>
-    <p class="lead">Mir geht es darum, Verantwortung für das eigene Leben zu übernehmen und Raum zu geben für das, was noch unentdeckt in einem schlummert.</p>
-    <p>Ich gebe dabei keinen Weg vor, sondern lade dazu ein, nach innen zu schauen und den eigenen zu erkunden, unabhängig davon, was Eltern, Lehrkräfte, Gleichaltrige oder die Gesellschaft für richtig halten. Neben Prüfungsdruck und anderen Erwartungen ist das eine frische Stimme und ein willkommener Ausgleich.</p>
-    <p class="wish">Ich wünsche mir, dass junge Menschen mit dem Gefühl nach Hause gehen, selbst herausfinden zu können, was sie inspiriert, was sie aufblühen lässt und wer sie in dieser Welt sein möchten.</p>
-  </div>
-</section>
+    <p class="label"><span lang="de">So läuft ein Vortrag ab</span><span lang="en">How a talk works</span></p>
+    <h2><span lang="de">Erst die Geschichten, dann Ihre Fragen</span><span lang="en">Stories first, then your questions</span></h2>
+    <div lang="de">
+      <p>Ich beginne mit etwa fünfzehn Minuten Geschichten und Fotos von unterwegs. Dann gebe ich das Wort ab, und alle können mich fragen, was sie wollen. Die Fragen bestimmen, wohin das Gespräch geht. Keine Vorlesung, keine Theorie. Ich erzähle nur von selbst Erlebtem.</p>
+      <p>Jeder Vortrag wird an das Publikum angepasst, von einer Schulklasse bis zu einem Team im Unternehmen. Ein Besuch dauert ein bis zwei Stunden, wobei sich zwei Stunden meist mehr lohnen. Auf Deutsch oder Englisch. Ich brauche nur einen Beamer für die Fotos.</p>
+    </div>
+    <div lang="en">
+      <p>I start with about fifteen minutes of stories and photos from the road. Then I hand it over, and people can ask me anything. Their questions decide where the conversation goes. There's no lecture and no theory. I only talk about what I've lived.</p>
+      <p>Every talk is adjusted to the audience, from a class of teenagers to a team at work. A visit can take from one to two hours, though two hours usually works better. In German or English. All I need is a projector for the photos.</p>
+    </div>
 
-<section id="kontakt">
-  <div class="wrap">
-    <div class="label">Kontakt</div>
-    <h2>Ich würde Ihre Schule sehr gern besuchen.</h2>
-    <p>Alles, was ich dafür brauche, ist ein Beamer für die Fotos. Auf Altersgruppe und Zeitplan stelle ich mich gern ein.</p>
-    <div class="contact">
-      <div><span class="label">E-Mail</span><span class="val">hallo@beispiel.de</span></div>
-      <div><span class="label">Telefon</span><span class="val">+49 170 000 00 00</span></div>
-      <div><span class="label">Website</span><span class="val">www.beispiel.de</span></div>
+    <div class="cols" style="margin-top: clamp(3rem, 7vw, 5rem);">
+      <div>
+        <h3><span lang="de">Für Schulen</span><span lang="en">For schools</span></h3>
+        <p lang="de">Neben den Erwartungen, die junge Menschen an sich selbst haben und die ihr Umfeld an sie stellt, bringe ich eine andere Stimme mit neuen Ideen. Ich gebe keinen Weg vor. Ich lade junge Menschen ein, nach innen zu schauen und ihren eigenen zu finden.</p>
+        <p lang="en">Next to expectations from themselves and their surroundings, I bring a different voice with new ideas. I don't suggest a path. I invite young people to look inward and find their own.</p>
+      </div>
+      <div>
+        <h3><span lang="de">Für Unternehmen</span><span lang="en">For companies</span></h3>
+        <p lang="de">Das Gespräch zwischen Kopf und Herz hört nach der Schule nicht auf. Eigentlich hört es nie auf, es begleitet uns ein Leben lang. Jeder, den ich kenne, hat Ideen oder Entscheidungen, die er immer wieder aufschiebt. Meine Vorträge sind eine Einladung, sie ernst zu nehmen und zu sehen, wohin Vertrauen führen kann. Und wer sich darauf nicht einlassen möchte, kann sich von den Geschichten auch einfach gut unterhalten lassen.</p>
+        <p lang="en">The conversation between head and heart doesn't stop after school. In fact, it never stops. It stays with us all our lives. Everyone I know has ideas or decisions they keep putting off. My talks are an invitation to take those seriously, and to see what trust can lead to. And if you don't want to go there, you can just be flat-out entertained by the stories.</p>
+      </div>
     </div>
   </div>
 </section>
+
+<section class="about">
+  <div class="wrap about-grid">
+    <div>
+      <p class="label"><span lang="de">Über Philipp</span><span lang="en">About Phil</span></p>
+      <p class="roles" lang="de">Segler, Skilehrer, Guide, Fotograf und Tausendsassa.</p>
+      <p class="roles" lang="en">Sailor, ski instructor, guide, photographer and all-rounder.</p>
+      <p lang="de">Ich bin eine besondere Art von Abenteurer, die sanftmütig lebendige Art. Ich will nicht gegen die Elemente oder gegen mich selbst kämpfen. Ich suche Harmonie und Inspiration in den Herausforderungen der Natur, des Reisens und des Lebens. Das Bedürfnis, auf mein Herz zu hören, hat mich in zahlreiche Länder und zu außergewöhnlichen Erfahrungen geführt.</p>
+      <p lang="en">I'm a particular kind of adventurer: the gentle, lively kind. I don't aim to be at war with the elements or with myself. I look for harmony and inspiration within the challenges of nature, of travel and of life. Listening to my heart has taken me to many countries and to extraordinary experiences.</p>
+    </div>
+    <figure>
+      <picture>
+        <source type="image/webp" srcset="images/walking-path-1200.webp 1200w, images/walking-path-2400.webp 2400w" sizes="(max-width: 720px) 100vw, 45vw">
+        <img src="images/walking-path-1200.jpg" srcset="images/walking-path-1200.jpg 1200w, images/walking-path-2400.jpg 2400w" sizes="(max-width: 720px) 100vw, 45vw" width="1200" height="800" alt="" loading="lazy">
+      </picture>
+      <figcaption><span lang="de">Auf dem weniger begangenen Weg</span><span lang="en">Walking the path less traveled</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="label"><span lang="de">Kontakt</span><span lang="en">Contact</span></p>
+    <h2><span lang="de">Lust auf einen Besuch?</span><span lang="en">Want me to visit?</span></h2>
+    <p lang="de">Wenn das nach etwas klingt, das zu Ihrer Schule oder Ihrem Team passt, freue ich mich, von Ihnen zu hören. Auf Altersgruppe, Publikum und Zeitplan stelle ich mich gern ein.</p>
+    <p lang="en">If this sounds like something for your school or your team, I'd be glad to hear from you. I'm happy to fit around age group, audience and schedule.</p>
+    <!-- TODO: add email and phone once Phil sends them -->
+    <p class="details"><span lang="de">E-Mail und Telefon folgen</span><span lang="en">Email and phone coming soon</span></p>
+  </div>
+</section>
+
+</main>
 
 <footer>
-  <div class="wrap">
-    <span class="who">Herzliche Grüße, Philipp Haemmerle</span>
-    <span class="label">Geschichten von Unterwegs</span>
-  </div>
+  <div class="wrap">© Philipp Haemmerle</div>
 </footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var titles = {
+    de: "Philipp Haemmerle · Geschichten von unterwegs",
+    en: "Phil Haemmerle · Stories from the road"
+  };
+  function setLang(lang) {
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", lang);
+    document.title = titles[lang];
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === lang ? "true" : "false");
+    });
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  var fromUrl = new URLSearchParams(location.search).get("lang");
+  var browser = (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
+  var initial = fromUrl === "de" || fromUrl === "en" ? fromUrl : (saved === "de" || saved === "en" ? saved : browser);
+  setLang(initial);
+  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
+  });
+})();
+</script>
 </body>
 </html>
