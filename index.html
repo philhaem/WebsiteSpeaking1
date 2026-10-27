@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-lang="de">
+<html lang="de" data-lang="de" data-title-de="Philipp Haemmerle · Geschichten von unterwegs" data-title-en="Phil Haemmerle · Stories from the road">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -9,287 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200;12..96,300;12..96,400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
 <link rel="preload" as="image" type="image/webp" imagesrcset="images/sailing-rio-1200.webp 1200w, images/sailing-rio-2400.webp 2400w" imagesizes="100vw">
-<style>
-:root {
-  --paper: #F5F7F4;
-  --ink: #15252E;
-  --sea: #1B4A5E;
-  --sea-ink: #EEF4F2;
-  --saffron: #D9A03A;
-  --muted: #5A6E78;
-  --rule: #C9D4D3;
-  --font-sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
-  --font-accent: "Newsreader", Georgia, "Times New Roman", serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0F1B22; --ink: #E6EDEC; --sea: #163C4D; --sea-ink: #EEF4F2;
-    --muted: #9AAEB6; --rule: #2C434E;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #0F1B22; --ink: #E6EDEC; --sea: #163C4D; --sea-ink: #EEF4F2;
-  --muted: #9AAEB6; --rule: #2C434E;
-  color-scheme: dark;
-}
-
-/* Language switching: only the active language is shown */
-html[data-lang="de"] body [lang="en"],
-html[data-lang="en"] body [lang="de"] { display: none !important; }
-
-* { box-sizing: border-box; }
-html, body { margin: 0; }
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-weight: 300;
-  font-size: 1.2rem;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-img { display: block; max-width: 100%; height: auto; }
-a { color: inherit; }
-
-.wrap {
-  max-width: 70rem;
-  margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-section { padding-block: clamp(4.5rem, 11vw, 9rem); }
-h2 {
-  font-family: var(--font-sans);
-  font-weight: 200;
-  font-size: clamp(2.6rem, 7vw, 5.6rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-  margin: 0 0 2rem;
-}
-h3 {
-  font-family: var(--font-sans);
-  font-weight: 300;
-  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin: 0 0 1rem;
-}
-p { margin: 0 0 1.1rem; max-width: 38rem; }
-p:last-child { margin-bottom: 0; }
-
-/* Section labels: the one place a different typeface is used */
-.label {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
-  color: var(--saffron);
-  margin: 0 0 1.6rem;
-}
-.center { text-align: center; }
-.center p, .center h2 { margin-left: auto; margin-right: auto; }
-
-/* Language toggle */
-.lang-toggle {
-  position: fixed;
-  top: max(14px, env(safe-area-inset-top, 0px));
-  right: max(16px, env(safe-area-inset-right, 0px));
-  z-index: 10;
-  display: flex;
-  border-radius: 999px;
-  background: rgba(10, 20, 26, 0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 4px;
-}
-.lang-toggle button {
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  color: #fff;
-  background: transparent;
-  border: 0;
-  border-radius: 999px;
-  padding: 0.45rem 0.8rem;
-  cursor: pointer;
-  opacity: 0.75;
-}
-.lang-toggle button[aria-pressed="true"] { background: #fff; color: #15252E; opacity: 1; }
-.lang-toggle button:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
-
-/* Parallax frames: the image moves slower than the page */
-.parallax { position: relative; overflow: hidden; }
-.parallax picture { position: absolute; left: 0; right: 0; top: -12%; height: 124%; will-change: transform; }
-.parallax picture img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Hero */
-.hero {
-  min-height: 100svh;
-  color: #fff;
-  padding: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-.hero picture { top: 0; height: 100%; }
-.hero picture img { object-position: 50% 85%; }
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(8, 16, 22, 0.6) 0%, rgba(8, 16, 22, 0.2) 45%, rgba(8, 16, 22, 0) 70%, rgba(8, 16, 22, 0.35) 100%);
-  pointer-events: none;
-}
-.hero .wrap {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  padding-top: clamp(5.5rem, 13vh, 9rem);
-  text-align: center;
-  will-change: transform;
-}
-.hero blockquote { margin: 0 auto; }
-.hero blockquote p {
-  font-family: var(--font-sans);
-  font-weight: 200;
-  font-size: clamp(2.2rem, 5.6vw, 4.8rem);
-  line-height: 1.06;
-  letter-spacing: -0.025em;
-  max-width: 22ch;
-  margin: 0 auto 1.2rem;
-  text-wrap: balance;
-  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
-}
-.hero cite {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
-  opacity: 0.9;
-}
-.hero .caption {
-  position: absolute;
-  z-index: 1;
-  right: max(16px, env(safe-area-inset-right, 0px));
-  bottom: 14px;
-  font-size: 0.85rem;
-  opacity: 0.8;
-  max-width: 60%;
-  text-align: right;
-  margin: 0;
-}
-
-/* Intro */
-.intro-section .name {
-  font-weight: 200;
-  font-size: clamp(2rem, 5.2vw, 4.2rem);
-  line-height: 1.12;
-  letter-spacing: -0.025em;
-  max-width: 24ch;
-  text-wrap: balance;
-}
-
-/* What I talk about */
-.intro-section .name { margin: 0 auto clamp(2.5rem, 6vw, 4.5rem); }
-.intro-section .lines p {
-  font-weight: 200;
-  font-size: clamp(1.7rem, 4vw, 3rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  max-width: 26ch;
-  margin: 0 auto 1.4rem;
-  text-wrap: balance;
-}
-
-figcaption {
-  font-family: var(--font-sans);
-  font-weight: 300;
-  font-size: 0.95rem;
-  color: var(--muted);
-  margin-top: 0.7rem;
-  line-height: 1.4;
-}
-
-/* Full-width photo, shown whole */
-.band { padding: 0; }
-.band figure { margin: 0; }
-.band img { width: 100%; }
-.band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
-
-/* Full-width photo with parallax */
-.band-parallax { height: min(85vh, 56vw); min-height: 22rem; padding: 0; }
-.band-caption { margin: 0.7rem 0 0; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
-
-/* Twelve years */
-.opener {
-  font-weight: 200;
-  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
-  line-height: 1.12;
-  letter-spacing: -0.025em;
-  max-width: 26ch;
-  text-wrap: balance;
-}
-.overview { margin-top: clamp(3rem, 7vw, 5rem); margin-bottom: 0; }
-
-/* Places list */
-.places { list-style: none; margin: 2.5rem auto 0; padding: 0; max-width: 46rem; }
-.places li {
-  font-weight: 300;
-  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
-  line-height: 1.3;
-  padding-block: 1rem;
-  border-top: 1px solid var(--rule);
-}
-.places li:last-child { border-bottom: 1px solid var(--rule); }
-
-/* Gallery: two equal columns, every image the same shape, so nothing leaves a gap */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: clamp(3rem, 7vw, 5rem);
-  text-align: left;
-}
-.gallery figure { margin: 0; min-width: 0; }
-.gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
-@media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
-
-/* Found */
-.found { background: var(--sea); color: var(--sea-ink); }
-.found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; max-width: none; }
-
-/* Longer text stays left-aligned for easy reading, in a centred column */
-.format .wrap > div[lang], .audience { text-align: left; max-width: 52rem; margin-inline: auto; }
-.format .wrap > div[lang] p, .audience p { max-width: none; }
-/* Same reading size as "What I've found" */
-.format .wrap > div[lang] p, .audience p, .about-grid p:not(.label):not(.roles) { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; }
-.found .found-title { font-weight: 200; font-size: clamp(1.9rem, 4.6vw, 3.6rem); line-height: 1.12; letter-spacing: -0.025em; margin: 0 0 2rem; color: var(--sea-ink); }
-
-/* Schools, then companies */
-.audience { margin-top: clamp(3.5rem, 8vw, 6rem); }
-
-/* About */
-.about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-.about-grid figure { margin: 0; }
-.about-grid .roles { font-weight: 300; font-size: clamp(1.4rem, 2.8vw, 1.9rem); line-height: 1.25; margin-bottom: 1.4rem; }
-@media (max-width: 720px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
-
-/* Contact */
-.contact { border-top: 1px solid var(--rule); }
-.contact .details { font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin-top: 2rem; }
-footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
-
-/* Gentle text motion while scrolling */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .parallax picture, .hero .wrap { transform: none !important; }
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -320,14 +40,14 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
     <p class="name" lang="de">Mein Name ist Philipp Haemmerle.</p>
     <p class="name" lang="en">My name is Phil Haemmerle.</p>
     <div class="lines" lang="de">
-      <p>Ich erzähle Geschichten von Reisen und Abenteuern.</p>
-      <p>Ich spreche darüber, wie wichtig es ist, auf seinen Instinkt und sein Herz zu hören.</p>
-      <p>Und darüber, was geschehen kann, wenn man dem Unentdeckten in sich Raum gibt.</p>
+      <p class="fill-words">Ich erzähle Geschichten von Reisen und Abenteuern.</p>
+      <p class="fill-words">Ich spreche darüber, wie wichtig es ist, auf seinen Instinkt und sein Herz zu hören.</p>
+      <p class="fill-words">Und darüber, was geschehen kann, wenn man dem Unentdeckten in sich Raum gibt.</p>
     </div>
     <div class="lines" lang="en">
-      <p>I tell stories of travel and adventure.</p>
-      <p>I talk about the importance of listening to your instinct and heart.</p>
-      <p>And about what can happen when you make room for what's still undiscovered in you.</p>
+      <p class="fill-words">I tell stories of travel and adventure.</p>
+      <p class="fill-words">I talk about the importance of listening to your instinct and heart.</p>
+      <p class="fill-words">And about what can happen when you make room for what's still undiscovered in you.</p>
     </div>
   </div>
 </section>
@@ -344,8 +64,8 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 
 <section class="places-section">
   <div class="wrap center">
-    <p class="opener" lang="de">Zwölf Jahre lang habe ich im Ausland gelebt und gearbeitet und bin dabei dem gefolgt, was mich bewegt und inspiriert hat.</p>
-    <p class="opener" lang="en">For twelve years I lived and worked abroad, following what moved and inspired me.</p>
+    <p class="opener fill-words" lang="de">Zwölf Jahre lang habe ich im Ausland gelebt und gearbeitet und bin dabei dem gefolgt, was mich bewegt und inspiriert hat.</p>
+    <p class="opener fill-words" lang="en">For twelve years I lived and worked abroad, following what moved and inspired me.</p>
     <p class="label overview"><span lang="de">Ein kurzer Überblick</span><span lang="en">A quick overview</span></p>
 
     <ul class="places" lang="de">
@@ -476,8 +196,16 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
     <h2><span lang="de">Lust auf einen Besuch?</span><span lang="en">Want me to visit?</span></h2>
     <p lang="de">Wenn das nach etwas klingt, das zu Ihrer Schule oder Ihrem Team passt, freue ich mich, von Ihnen zu hören. Auf Altersgruppe, Publikum und Zeitplan stelle ich mich gern ein.</p>
     <p lang="en">If this sounds like something for your school or your team, I'd be glad to hear from you. I'm happy to fit around age group, audience and schedule.</p>
-    <!-- TODO: add email and phone once Phil sends them -->
-    <p class="details"><span lang="de">E-Mail und Telefon folgen</span><span lang="en">Email and phone coming soon</span></p>
+    <p style="margin-top:2rem"><button class="button" type="button" data-open-form="contact-form"><span lang="de">Kontakt aufnehmen</span><span lang="en">Get in touch</span></button></p>
+    <form class="form" id="contact-form" name="contact" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact">
+      <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <label><span><span lang="de">Name</span><span lang="en">Name</span></span><input name="name" autocomplete="name" required></label>
+      <label><span><span lang="de">E-Mail</span><span lang="en">Email</span></span><input type="email" name="email" autocomplete="email" required></label>
+      <label><span><span lang="de">Telefon</span><span lang="en">Phone</span> <span class="opt"><span lang="de">(optional)</span><span lang="en">(optional)</span></span></span><input type="tel" name="phone" autocomplete="tel"></label>
+      <label><span><span lang="de">Nachricht</span><span lang="en">Message</span></span><textarea name="message" required></textarea></label>
+      <button class="button" type="submit"><span lang="de">Senden</span><span lang="en">Send</span></button>
+    </form>
   </div>
 </section>
 
@@ -486,78 +214,6 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 <footer>
   <div class="wrap">© Philipp Haemmerle</div>
 </footer>
-
-<script>
-(function () {
-  var root = document.documentElement;
-  var titles = {
-    de: "Philipp Haemmerle · Geschichten von unterwegs",
-    en: "Phil Haemmerle · Stories from the road"
-  };
-  function setLang(lang) {
-    root.setAttribute("data-lang", lang);
-    root.setAttribute("lang", lang);
-    document.title = titles[lang];
-    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
-      b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === lang ? "true" : "false");
-    });
-    try { localStorage.setItem("lang", lang); } catch (e) {}
-  }
-  var saved = null;
-  try { saved = localStorage.getItem("lang"); } catch (e) {}
-  var fromUrl = new URLSearchParams(location.search).get("lang");
-  var browser = (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
-  var initial = fromUrl === "de" || fromUrl === "en" ? fromUrl : (saved === "de" || saved === "en" ? saved : browser);
-  setLang(initial);
-  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
-    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
-  });
-})();
-
-// Parallax: photos move slower than the text
-(function () {
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var frames = Array.prototype.slice.call(document.querySelectorAll(".parallax"));
-  var heroText = document.querySelector(".hero .wrap");
-  var ticking = false;
-  function update() {
-    ticking = false;
-    var vh = window.innerHeight;
-    frames.forEach(function (f) {
-      var r = f.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > vh) return;
-      var pic = f.querySelector("picture");
-      if (!pic) return;
-      var shift;
-      if (f.classList.contains("hero")) {
-        shift = -r.top * 0.45;            // hero photo lags behind the page
-      } else {
-        var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
-        shift = progress * r.height * 0.1;
-      }
-      pic.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
-    });
-    if (heroText) {
-      var y = Math.min(window.scrollY, vh);
-      heroText.style.transform = "translate3d(0," + (-y * 0.15).toFixed(1) + "px,0)";
-      heroText.style.opacity = String(Math.max(0, 1 - y / (vh * 0.8)));
-    }
-  }
-  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  window.addEventListener("resize", update);
-  update();
-})();
-
-// Text and photos ease in as they scroll into view
-(function () {
-  if (!("IntersectionObserver" in window)) return;
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var els = document.querySelectorAll("main .label, main h2, main h3, main p, .places li, .gallery figure, .about-grid figure");
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { rootMargin: "0px 0px -8% 0px" });
-  els.forEach(function (el) { el.classList.add("reveal"); io.observe(el); });
-})();
-</script>
+<script src="site.js"></script>
 </body>
 </html>

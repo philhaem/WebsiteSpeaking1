@@ -1,0 +1,127 @@
+(function () {
+  var root = document.documentElement;
+  var titles = {
+    de: root.getAttribute("data-title-de") || document.title,
+    en: root.getAttribute("data-title-en") || document.title
+  };
+  function setLang(lang) {
+    root.setAttribute("data-lang", lang);
+    root.setAttribute("lang", lang);
+    document.title = titles[lang];
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === lang ? "true" : "false");
+    });
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  var fromUrl = new URLSearchParams(location.search).get("lang");
+  var browser = (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
+  var initial = fromUrl === "de" || fromUrl === "en" ? fromUrl : (saved === "de" || saved === "en" ? saved : browser);
+  setLang(initial);
+  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
+  });
+})();
+
+// Parallax: photos move slower than the text
+(function () {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var frames = Array.prototype.slice.call(document.querySelectorAll(".parallax"));
+  var heroText = document.querySelector(".hero .wrap");
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    frames.forEach(function (f) {
+      var r = f.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var pic = f.querySelector("picture");
+      if (!pic) return;
+      var shift;
+      if (f.classList.contains("hero")) {
+        shift = -r.top * 0.45;            // hero photo lags behind the page
+      } else {
+        var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+        shift = progress * r.height * 0.1;
+      }
+      pic.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
+    });
+    if (heroText) {
+      var y = Math.min(window.scrollY, vh);
+      heroText.style.transform = "translate3d(0," + (-y * 0.15).toFixed(1) + "px,0)";
+      heroText.style.opacity = String(Math.max(0, 1 - y / (vh * 0.8)));
+    }
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+
+// Text and photos ease in as they scroll into view
+(function () {
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var els = document.querySelectorAll("main .label, main h2, main h3, main p, .places li, .gallery figure, .about-grid figure");
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  els.forEach(function (el) { el.classList.add("reveal"); io.observe(el); });
+})();
+
+// Pull lines: each word fills in as the line scrolls up the screen
+(function () {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var blocks = Array.prototype.slice.call(document.querySelectorAll(".fill-words"));
+  if (!blocks.length) return;
+  var sets = blocks.map(function (el) {
+    el.classList.remove("reveal");
+    var words = [];
+    Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+      if (node.nodeType !== 3) return;
+      var frag = document.createDocumentFragment();
+      node.textContent.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        var span = document.createElement("span");
+        span.className = "w";
+        span.textContent = part;
+        frag.appendChild(span);
+        words.push(span);
+      });
+      el.replaceChild(frag, node);
+    });
+    return { el: el, words: words };
+  });
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    sets.forEach(function (s) {
+      var r = s.el.getBoundingClientRect();
+      // 0 when the line enters at the bottom, 1 when it reaches 40% from the top
+      var p = (vh - r.top) / (vh * 0.6);
+      p = Math.max(0, Math.min(1, p));
+      var n = s.words.length;
+      s.words.forEach(function (w, i) {
+        var o = Math.max(0, Math.min(1, p * (n + 2) - i));
+        w.style.setProperty("--o", (0.18 + 0.82 * o).toFixed(2));
+      });
+    });
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+
+// "Get in touch" opens the contact form
+document.querySelectorAll("[data-open-form]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var f = document.getElementById(b.getAttribute("data-open-form"));
+    if (!f) return;
+    f.hidden = false;
+    b.parentNode.hidden = true;
+    var first = f.querySelector("input:not([type=hidden]):not([name=bot-field])");
+    if (first) first.focus();
+  });
+});
