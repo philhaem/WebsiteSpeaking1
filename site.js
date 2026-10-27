@@ -30,6 +30,82 @@
   var frames = Array.prototype.slice.call(document.querySelectorAll(".parallax"));
   var heroText = document.querySelector(".hero .wrap");
   var ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    frames.forEach(function (f) {
+      var r = f.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var pic = f.querySelector("picture");
+      if (!pic) return;
+      var shift;
+      if (f.classList.contains("hero")) {
+        shift = -r.top * 0.45;            // hero photo lags behind the page
+      } else {
+        var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+        shift = progress * r.height * 0.1;
+      }
+      pic.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
+    });
+    if (heroText) {
+      var y = Math.min(window.scrollY, vh);
+      heroText.style.transform = "translate3d(0," + (-y * 0.15).toFixed(1) + "px,0)";
+      heroText.style.opacity = String(Math.max(0, 1 - y / (vh * 0.8)));
+    }
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+
+// Text and photos ease in as they scroll into view
+(function () {
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var els = document.querySelectorAll("main .label, main h2, main h3, main p, .places li, .gallery figure, .about-grid figure");
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  els.forEach(function (el) { el.classList.add("reveal"); io.observe(el); });
+})();
+
+// Pull lines: words start spread apart and glide into place as the line scrolls up
+(function () {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var blocks = Array.prototype.slice.call(document.querySelectorAll(".fill-words"));
+  if (!blocks.length) return;
+  var SPREAD = 0.45;   // how far apart the words start (share of their distance from the centre)
+  var sets = blocks.map(function (el) {
+    el.classList.remove("reveal");
+    var words = [];
+    Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+      if (node.nodeType !== 3) return;
+      var frag = document.createDocumentFragment();
+      node.textContent.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        var span = document.createElement("span");
+        span.className = "w";
+        span.textContent = part;
+        frag.appendChild(span);
+        words.push({ el: span, dx: 0 });
+      });
+      el.replaceChild(frag, node);
+    });
+    return { el: el, words: words };
+  });
+  function measure() {
+    sets.forEach(function (s) {
+      var box = s.el.getBoundingClientRect();
+      var mid = box.left + box.width / 2;
+      s.words.forEach(function (w) {
+        w.el.style.transform = "none";
+        var r = w.el.getBoundingClientRect();
+        w.dx = (r.left + r.width / 2) - mid;
+      });
+    });
+  }
+  var ticking = false;
   // Each line follows its scroll target with a soft lag, so the motion stays fluid
   // even with notchy mouse wheels.
   function target(s, vh) {
