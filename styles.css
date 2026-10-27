@@ -279,8 +279,7 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 }
 
 /* Scroll-linked word fill for pull lines */
-.fill-words .w { opacity: var(--o, 0.18); transition: opacity 0.15s linear; }
-@media (prefers-reduced-motion: reduce) { .fill-words .w { opacity: 1; } }
+.fill-words .w { display: inline-block; will-change: transform; }
 
 /* Buttons */
 .button {

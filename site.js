@@ -69,11 +69,12 @@
   els.forEach(function (el) { el.classList.add("reveal"); io.observe(el); });
 })();
 
-// Pull lines: each word fills in as the line scrolls up the screen
+// Pull lines: words start spread apart and glide into place as the line scrolls up
 (function () {
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   var blocks = Array.prototype.slice.call(document.querySelectorAll(".fill-words"));
   if (!blocks.length) return;
+  var SPREAD = 0.45;   // how far apart the words start (share of their distance from the centre)
   var sets = blocks.map(function (el) {
     el.classList.remove("reveal");
     var words = [];
@@ -87,31 +88,46 @@
         span.className = "w";
         span.textContent = part;
         frag.appendChild(span);
-        words.push(span);
+        words.push({ el: span, dx: 0 });
       });
       el.replaceChild(frag, node);
     });
     return { el: el, words: words };
   });
+  function measure() {
+    sets.forEach(function (s) {
+      var box = s.el.getBoundingClientRect();
+      var mid = box.left + box.width / 2;
+      s.words.forEach(function (w) {
+        w.el.style.transform = "none";
+        var r = w.el.getBoundingClientRect();
+        w.dx = (r.left + r.width / 2) - mid;
+      });
+    });
+  }
   var ticking = false;
   function update() {
     ticking = false;
     var vh = window.innerHeight;
     sets.forEach(function (s) {
       var r = s.el.getBoundingClientRect();
-      // 0 when the line enters at the bottom, 1 when it reaches 40% from the top
-      var p = (vh - r.top) / (vh * 0.6);
+      // 0 as the line enters at the bottom, 1 once it is just above the middle
+      var p = (vh - r.top) / (vh * 0.55);
       p = Math.max(0, Math.min(1, p));
-      var n = s.words.length;
-      s.words.forEach(function (w, i) {
-        var o = Math.max(0, Math.min(1, p * (n + 2) - i));
-        w.style.setProperty("--o", (0.18 + 0.82 * o).toFixed(2));
+      var e = 1 - Math.pow(1 - p, 3);   // ease out
+      var k = (1 - e) * SPREAD;
+      s.words.forEach(function (w) {
+        w.el.style.transform = "translate3d(" + (w.dx * k).toFixed(1) + "px,0,0)";
       });
+      s.el.style.opacity = (0.35 + 0.65 * e).toFixed(2);
     });
   }
+  function relayout() { measure(); update(); }
   window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  window.addEventListener("resize", update);
-  update();
+  window.addEventListener("resize", relayout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+  document.querySelectorAll("[data-set-lang]").forEach(function (b) { b.addEventListener("click", function () { setTimeout(relayout, 0); }); });
+  relayout();
 })();
 
 // "Get in touch" opens the contact form
