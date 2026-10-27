@@ -246,7 +246,8 @@ figcaption {
 @media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
 
 /* Found */
-.found { background: var(--sea); color: var(--sea-ink); }
+.found, .tint { background: var(--sea); color: var(--sea-ink); }
+.tint { --ink: var(--sea-ink); --muted: #B9CACE; --rule: rgba(238, 244, 242, 0.25); }
 .found .wrap { text-align: center; }
 .found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; max-width: 52rem; margin-left: auto; margin-right: auto; }
 .found .found-title { margin-left: auto; margin-right: auto; max-width: none; }
@@ -259,7 +260,7 @@ figcaption {
 .found .found-title { font-weight: 200; font-size: clamp(1.9rem, 4.6vw, 3.6rem); line-height: 1.12; letter-spacing: -0.025em; margin: 0 0 2rem; color: var(--sea-ink); }
 
 /* Schools, then companies */
-.audience { margin-top: clamp(3.5rem, 8vw, 6rem); }
+.audience + .audience { margin-top: clamp(3.5rem, 8vw, 6rem); }
 
 /* About */
 .about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
@@ -268,7 +269,7 @@ figcaption {
 @media (max-width: 720px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* Contact */
-.contact { border-top: 1px solid var(--rule); }
+.contact:not(.tint) { border-top: 1px solid var(--rule); }
 .contact .details { font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin-top: 2rem; }
 footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 
