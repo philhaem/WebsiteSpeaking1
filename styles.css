@@ -247,10 +247,12 @@ figcaption {
 
 /* Found */
 .found { background: var(--sea); color: var(--sea-ink); }
-.found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; max-width: none; }
+.found .wrap { text-align: center; }
+.found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; max-width: 52rem; margin-left: auto; margin-right: auto; }
+.found .found-title { margin-left: auto; margin-right: auto; max-width: none; }
 
-/* Longer text stays left-aligned for easy reading, in a centred column */
-.format .wrap > div[lang], .audience { text-align: left; max-width: 52rem; margin-inline: auto; }
+/* Headings and text centred, in a comfortable column */
+.format .wrap > div[lang], .audience { text-align: center; max-width: 52rem; margin-inline: auto; }
 .format .wrap > div[lang] p, .audience p { max-width: none; }
 /* Same reading size as "What I've found" */
 .format .wrap > div[lang] p, .audience p, .about-grid p:not(.label):not(.roles) { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; }
