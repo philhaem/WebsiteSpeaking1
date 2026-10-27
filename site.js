@@ -111,10 +111,10 @@
     var vh = window.innerHeight;
     sets.forEach(function (s) {
       var r = s.el.getBoundingClientRect();
-      // 0 as the line enters at the bottom, 1 once it is just above the middle
-      var p = (vh - r.top) / (vh * 0.55);
+      // stays spread until the line is well into view, settles a bit above the middle
+      var p = (vh * 0.8 - r.top) / (vh * 0.5);
       p = Math.max(0, Math.min(1, p));
-      var e = 1 - Math.pow(1 - p, 3);   // ease out
+      var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;   // slow start, slow finish
       var k = (1 - e) * SPREAD;
       s.words.forEach(function (w) {
         w.el.style.transform = "translate3d(" + (w.dx * k).toFixed(1) + "px,0,0)";
