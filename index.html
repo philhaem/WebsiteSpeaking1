@@ -264,6 +264,9 @@ figcaption {
 /* Longer text stays left-aligned for easy reading, in a centred column */
 .format .wrap > div[lang], .audience { text-align: left; max-width: 52rem; margin-inline: auto; }
 .format .wrap > div[lang] p, .audience p { max-width: none; }
+/* Same reading size as "What I've found" */
+.format .wrap > div[lang] p, .audience p, .about-grid p:not(.label):not(.roles) { font-size: clamp(1.35rem, 2.4vw, 1.8rem); line-height: 1.5; }
+.found .found-title { font-weight: 200; font-size: clamp(1.9rem, 4.6vw, 3.6rem); line-height: 1.12; letter-spacing: -0.025em; margin: 0 0 2rem; color: var(--sea-ink); }
 
 /* Schools, then companies */
 .audience { margin-top: clamp(3.5rem, 8vw, 6rem); }
@@ -401,14 +404,14 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 
 <section class="found">
   <div class="wrap">
-    <p class="label"><span lang="de">Was ich erlebt habe</span><span lang="en">What I've found</span></p>
+    <p class="opener found-title"><span lang="de">Was ich erlebt habe</span><span lang="en">What I've found</span></p>
     <div lang="de">
-      <p>Wenn ich Entscheidungen aus dem heraus getroffen habe, was mich tief bewegt, was mich inspiriert oder was mich einfach begeistert hat, ist dadurch Raum für so viele Möglichkeiten entstanden. Und wenn ich offen dafür war, sind sehr unerwartete und wunderbare Dinge passiert.</p>
-      <p>Das, wovor ich Angst hatte, ist meiner Erfahrung nach meistens gar nicht eingetreten. Stattdessen ist etwas ganz anderes passiert. Es hat mich zu einigen der bedeutsamsten und wundervollsten Reisen und Erlebnisse meines Lebens geführt, und genau das möchte ich teilen.</p>
+      <p>Wenn ich Entscheidungen aus dem heraus getroffen habe, was mich inspiriert und bewegt hat, ist dadurch so viel Raum für Möglichkeiten entstanden. Und wenn ich offen dafür war, sind sehr unerwartete und wunderbare Dinge passiert.</p>
+      <p>Das, wovor ich Angst hatte, ist meiner Erfahrung nach meistens nicht eingetreten. Stattdessen ist etwas ganz anderes passiert. Es hat mich zu einigen der bedeutsamsten und wundervollsten Reisen und Erlebnisse meines Lebens geführt, und genau das möchte ich teilen.</p>
     </div>
     <div lang="en">
-      <p>When I've made a decision based on what moved me deeply, what inspired me, or simply what I felt excited about, it made room for so much possibility. And when I was open to it, very unexpected and amazing things happened.</p>
-      <p>In my experience, the things I was afraid of usually never came to pass. Something else entirely happened instead. It has led to some of the most meaningful and wondrous journeys and experiences of my life, and that's what I want to share.</p>
+      <p>When I've made a decision based on what inspired and moved me, it made so much room for possibility. And when I was open to it, very unexpected and amazing things happened.</p>
+      <p>In my experience, the things I was afraid of usually didn't come to pass. Something else entirely happened instead. It has led to some of the most meaningful and wondrous journeys and experiences of my life, and that's what I want to share.</p>
     </div>
   </div>
 </section>
@@ -426,23 +429,23 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
     <p class="label"><span lang="de">So läuft ein Vortrag ab</span><span lang="en">How a talk works</span></p>
     <h2><span lang="de">Erst die Geschichten, dann Ihre Fragen</span><span lang="en">Stories first, then your questions</span></h2>
     <div lang="de">
-      <p>Ich beginne mit etwa fünfzehn Minuten Geschichten und Fotos von unterwegs. Dann gebe ich das Wort ab, und alle können mich fragen, was sie wollen. Die Fragen bestimmen, wohin das Gespräch geht. Keine Vorlesung, keine Theorie. Ich erzähle nur von selbst Erlebtem.</p>
+      <p>Ich beginne mit etwa fünfzehn Minuten Geschichten und Fotos von unterwegs. Dann gebe ich das Wort ab, und alle können mich fragen, was sie wollen. Die Fragen bestimmen, wohin das Gespräch geht und auf welche Geschichten und Erlebnisse ich tiefer eingehe. Keine Vorlesung, keine Theorie, und kein Vortrag gleicht dem anderen. Ich erzähle nur von selbst Erlebtem.</p>
       <p>Jeder Vortrag wird an das Publikum angepasst, von einer Schulklasse bis zu einem Team im Unternehmen. Ein Besuch dauert ein bis zwei Stunden, wobei sich zwei Stunden meist mehr lohnen. Auf Deutsch oder Englisch. Ich brauche nur einen Beamer für die Fotos.</p>
     </div>
     <div lang="en">
-      <p>I start with about fifteen minutes of stories and photos from the road. Then I hand it over, and people can ask me anything. Their questions decide where the conversation goes. There's no lecture and no theory. I only talk about what I've lived.</p>
+      <p>I start with about fifteen minutes of stories and photos from the road. Then I hand it over, and people can ask me anything. Their questions decide where the conversation goes and which stories and experiences I go into more deeply. There's no lecture and no theory, and no two talks are alike. I only talk about what I've lived.</p>
       <p>Every talk is adjusted to the audience, from a class of teenagers to a team at work. A visit can take from one to two hours, though two hours usually works better. In German or English. All I need is a projector for the photos.</p>
     </div>
 
     <div class="audience">
         <h3><span lang="de">Für Schulen</span><span lang="en">For schools</span></h3>
-        <p lang="de">Neben den Erwartungen, die junge Menschen an sich selbst haben und die ihr Umfeld an sie stellt, bringe ich eine andere Stimme mit neuen Ideen. Ich gebe keinen Weg vor. Ich lade junge Menschen ein, nach innen zu schauen und ihren eigenen zu finden.</p>
-        <p lang="en">Next to expectations from themselves and their surroundings, I bring a different voice with new ideas. I don't suggest a path. I invite young people to look inward and find their own.</p>
+        <p lang="de">Neben den Erwartungen, die junge Menschen an sich selbst haben und die ihr Umfeld an sie stellt, bringe ich eine andere Stimme mit neuen Ideen. Ich gebe keinen Weg vor. Ich lade junge Menschen ein, nach innen zu schauen und ihren eigenen zu finden. Ich wünsche mir, dass sie mit dem Gefühl nach Hause gehen, selbst herausfinden zu können, was sie inspiriert, was sie aufblühen lässt und wer sie in dieser Welt sein möchten.</p>
+        <p lang="en">Next to expectations from themselves and their surroundings, I bring a different voice with new ideas. I don't suggest a path. I invite young people to look inward and find their own. I hope they go home feeling they can find out for themselves what inspires them, what makes them flourish, and who they want to be in this world.</p>
     </div>
     <div class="audience">
         <h3><span lang="de">Für Unternehmen</span><span lang="en">For companies</span></h3>
-        <p lang="de">Das Gespräch zwischen Kopf und Herz hört nach der Schule nicht auf. Eigentlich hört es nie auf, es begleitet uns ein Leben lang. Jeder, den ich kenne, hat Ideen oder Entscheidungen, die er immer wieder aufschiebt. Meine Vorträge sind eine Einladung, sie ernst zu nehmen und zu sehen, wohin Vertrauen führen kann. Und wer sich darauf nicht einlassen möchte, kann sich von den Geschichten auch einfach gut unterhalten lassen.</p>
-        <p lang="en">The conversation between head and heart doesn't stop after school. In fact, it never stops. It stays with us all our lives. Everyone I know has ideas or decisions they keep putting off. My talks are an invitation to take those seriously, and to see what trust can lead to. And if you don't want to go there, you can just be flat-out entertained by the stories.</p>
+        <p lang="de">Das Gespräch zwischen Kopf und Herz begleitet uns ein Leben lang. Jeder, den ich kenne, hat Ideen und Entscheidungen, die er immer wieder aufschiebt. Meine Vorträge sind eine Einladung, sie ernst zu nehmen, über sie nachzudenken und zu sehen, wohin Vertrauen, Instinkt und Inspiration führen können. Und wer sich darauf nicht einlassen möchte, kann sich auch einfach von ein paar verrückten Geschichten gut unterhalten lassen.</p>
+        <p lang="en">The conversation between head and heart stays with us all our lives. Everyone I know has ideas and decisions they keep putting off. My talks are an invitation to take them seriously, to reflect on them, and to see what trust, instinct and inspiration can lead to. And if you don't want to go there, you can just be flat-out entertained by some crazy stories.</p>
       
     </div>
   </div>
