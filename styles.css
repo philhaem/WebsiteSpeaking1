@@ -228,6 +228,13 @@ figcaption {
 }
 .band-question p { margin: 0; white-space: nowrap; }   /* lines break only where the HTML says */
 .band-question p[lang="de"] { font-size: 0.84em; }   /* the German question is longer, so it stays in the sky */
+/* German line breaks: after "tun," on wide screens; two even lines on phones */
+.band-question .br-narrow { display: none; }
+@media (max-width: 600px) {
+  .band-question .br-wide { display: none; }
+  .band-question .br-narrow { display: inline; }
+  .band-question p[lang="de"] { font-size: 0.96em; }
+}
 .band-question em { font-style: normal; font-weight: 300; font-size: 1.45em; }
 .band-inner-caption {
   position: absolute; z-index: 1; margin: 0;
