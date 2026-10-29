@@ -230,7 +230,7 @@ figcaption {
 /* Question set into the bright snow, bottom right */
 .band-question {
   position: absolute; z-index: 1; margin: 0;
-  left: max(16px, 4vw); top: 5%; max-width: min(55%, 40rem);
+  left: max(16px, 4vw); top: 3%; max-width: min(60%, 44rem);
   text-align: left; color: #fff; text-shadow: 0 1px 20px rgba(10, 40, 90, 0.25);
   font-family: var(--font-sans); font-weight: 200;
   font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;
@@ -434,7 +434,7 @@ html.lb-open { overflow: hidden; }
 @media (max-width: 600px) {
   /* On narrow screens the bottom-left is bright snow, so the caption moves into the blue sky */
   .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
-  .band-question { top: 4%; max-width: 62%; }
+  .band-question { top: 2.5%; max-width: 70%; }
 }
 
 /* Legal pages */
