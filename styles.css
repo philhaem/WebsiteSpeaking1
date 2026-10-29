@@ -214,11 +214,11 @@ figcaption {
 }
 .band-quote p {
   font-family: var(--font-sans); font-weight: 300;
-  font-size: clamp(1.35rem, 4.2vw, 3.6rem); line-height: 1.1; letter-spacing: -0.02em;
+  font-size: clamp(1.15rem, 3.2vw, 2.7rem); line-height: 1.1; letter-spacing: -0.02em;
   max-width: 26ch; margin: 0 auto 0.5rem; text-wrap: balance;
   text-shadow: 0 1px 18px rgba(255, 255, 255, 0.35);
 }
-@media (max-width: 600px) { .band-quote { top: 5%; } .band-quote p { font-size: 1.1rem; } }
+@media (max-width: 600px) { .band-quote { top: 5%; } .band-quote p { font-size: 1rem; } }
 .band-quote cite { font-family: var(--font-accent); font-style: italic; font-size: clamp(0.85rem, 1.4vw, 1.2rem); }
 .band img { width: 100%; }
 .band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
@@ -229,7 +229,7 @@ figcaption {
 /* Question set into the bright snow, bottom right */
 .band-question {
   position: absolute; z-index: 1; margin: 0;
-  left: max(16px, 4vw); top: 10%; max-width: min(55%, 40rem);
+  left: max(16px, 4vw); top: 5%; max-width: min(55%, 40rem);
   text-align: left; color: #fff; text-shadow: 0 1px 20px rgba(10, 40, 90, 0.25);
   font-family: var(--font-sans); font-weight: 200;
   font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;
@@ -279,15 +279,45 @@ figcaption {
 @media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
 /* Gallery has its own section with room above and below */
 .gallery-section { padding-block: clamp(2.5rem, 6vw, 5rem); }
-/* Masonry: four columns of photos at their own shapes, two columns on phones */
-.gallery-masonry { columns: 4; column-gap: 8px; padding-inline: 8px; }
-.gallery-masonry figure { margin: 0 0 8px; break-inside: avoid; }
-.gallery-masonry img { width: 100%; height: auto; }
-.gallery-masonry .tall img { aspect-ratio: 3 / 4; object-fit: cover; }
+/* Mosaic: eleven photos fill one solid block with no gaps.
+   Desktop is a 4 x 4 square, phones a 2 x 8 strip. The first photo is shown large;
+   the others are single squares or wide pairs, since all photos are landscape. Photo order follows the HTML.
+   If photos are added or removed, these layouts need updating to match. */
+.gallery-masonry {
+  display: grid; gap: 8px; padding-inline: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  aspect-ratio: 1 / 1;
+  grid-template-areas:
+    "a a b c"
+    "a a d e"
+    "f g g h"
+    "i j k k";
+}
+.gallery-masonry figure { margin: 0; min-width: 0; min-height: 0; }
+.gallery-masonry picture { display: block; width: 100%; height: 100%; cursor: zoom-in; }
+.gallery-masonry img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-masonry figure:nth-child(1)  { grid-area: a; }
+.gallery-masonry figure:nth-child(2)  { grid-area: b; }
+.gallery-masonry figure:nth-child(3)  { grid-area: c; }
+.gallery-masonry figure:nth-child(4)  { grid-area: d; }
+.gallery-masonry figure:nth-child(5)  { grid-area: e; }
+.gallery-masonry figure:nth-child(6)  { grid-area: f; }
+.gallery-masonry figure:nth-child(7)  { grid-area: g; }
+.gallery-masonry figure:nth-child(8)  { grid-area: h; }
+.gallery-masonry figure:nth-child(9)  { grid-area: i; }
+.gallery-masonry figure:nth-child(10) { grid-area: j; }
+.gallery-masonry figure:nth-child(11) { grid-area: k; }
 .gallery-masonry figcaption { display: none; }   /* captions show only in the lightbox */
-.gallery-masonry picture { cursor: zoom-in; display: block; }
 .gallery-masonry picture:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
-@media (max-width: 720px) { .gallery-masonry { columns: 2; } }
+@media (max-width: 720px) {
+  .gallery-masonry {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    aspect-ratio: 1 / 4;
+    grid-template-areas: "a a" "a a" "b c" "d e" "f f" "g h" "i j" "k k";
+  }
+}
 /* Full-width gallery: four equal squares per row, two per row on phones */
 .gallery.gallery-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-inline: 8px; }
 .gallery-wide img { aspect-ratio: 1 / 1; }
@@ -326,6 +356,9 @@ figcaption {
 /* Contact */
 .contact:not(.tint) { border-top: 1px solid var(--rule); }
 .contact .details { font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin-top: 2rem; }
+/* Feedback sits on the page colour so it reads apart from the blue contact section */
+.feedback-section { border-bottom: 1px solid var(--rule); }
+.feedback-section .button { text-decoration: none; }
 footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 
 /* Gentle text motion while scrolling */
@@ -418,7 +451,7 @@ html.lb-open { overflow: hidden; }
 @media (max-width: 600px) {
   /* On narrow screens the bottom-left is bright snow, so the caption moves into the blue sky */
   .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
-  .band-question { top: 9%; max-width: 62%; }
+  .band-question { top: 4%; max-width: 62%; }
 }
 
 /* Legal pages */
