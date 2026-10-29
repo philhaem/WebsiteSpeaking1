@@ -141,3 +141,73 @@ document.querySelectorAll("[data-open-form]").forEach(function (b) {
     if (first) first.focus();
   });
 });
+
+// Gallery lightbox: click a photo to see it large and uncropped
+(function () {
+  var figs = Array.prototype.slice.call(document.querySelectorAll(".gallery-wide figure"));
+  if (!figs.length) return;
+  function bigSrc(img) {
+    var set = img.getAttribute("srcset");
+    if (!set) return img.getAttribute("src");
+    var parts = set.split(",").map(function (s) { return s.trim().split(/\s+/)[0]; });
+    return parts[parts.length - 1];
+  }
+  var box = document.createElement("div");
+  box.className = "lightbox";
+  box.setAttribute("role", "dialog");
+  box.setAttribute("aria-modal", "true");
+  box.hidden = true;
+  box.innerHTML =
+    '<button class="lb-close" type="button" aria-label="Close">&times;</button>' +
+    '<button class="lb-prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+    '<figure class="lb-fig"><img alt=""><figcaption></figcaption></figure>' +
+    '<button class="lb-next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>';
+  document.body.appendChild(box);
+  var img = box.querySelector("img"), cap = box.querySelector("figcaption");
+  var current = 0, lastFocus = null;
+  function show(i) {
+    current = (i + figs.length) % figs.length;
+    var f = figs[current], src = f.querySelector("img");
+    img.src = bigSrc(src);
+    var fc = f.querySelector("figcaption");
+    cap.innerHTML = fc ? fc.innerHTML : "";
+  }
+  function open(i) {
+    lastFocus = document.activeElement;
+    show(i);
+    box.hidden = false;
+    document.documentElement.classList.add("lb-open");
+    box.querySelector(".lb-close").focus();
+  }
+  function close() {
+    box.hidden = true;
+    document.documentElement.classList.remove("lb-open");
+    if (lastFocus) lastFocus.focus();
+  }
+  figs.forEach(function (f, i) {
+    var pic = f.querySelector("picture");
+    pic.setAttribute("tabindex", "0");
+    pic.setAttribute("role", "button");
+    pic.setAttribute("aria-label", "Open photo");
+    pic.addEventListener("click", function () { open(i); });
+    pic.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); } });
+  });
+  box.querySelector(".lb-close").addEventListener("click", close);
+  box.querySelector(".lb-prev").addEventListener("click", function (e) { e.stopPropagation(); show(current - 1); });
+  box.querySelector(".lb-next").addEventListener("click", function (e) { e.stopPropagation(); show(current + 1); });
+  box.addEventListener("click", function (e) { if (e.target === box) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (box.hidden) return;
+    if (e.key === "Escape") close();
+    else if (e.key === "ArrowLeft") show(current - 1);
+    else if (e.key === "ArrowRight") show(current + 1);
+  });
+  // Swipe on phones
+  var x0 = null;
+  box.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  box.addEventListener("touchend", function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+  });
+})();
