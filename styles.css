@@ -218,7 +218,7 @@ figcaption {
   max-width: 26ch; margin: 0 auto 0.5rem; text-wrap: balance;
   text-shadow: 0 1px 18px rgba(255, 255, 255, 0.35);
 }
-@media (max-width: 600px) { .band-quote { top: 5%; } }
+@media (max-width: 600px) { .band-quote { top: 5%; } .band-quote p { font-size: 1.1rem; } }
 .band-quote cite { font-family: var(--font-accent); font-style: italic; font-size: clamp(0.85rem, 1.4vw, 1.2rem); }
 .band img { width: 100%; }
 .band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
@@ -229,8 +229,8 @@ figcaption {
 /* Question set into the bright snow, bottom right */
 .band-question {
   position: absolute; z-index: 1; margin: 0;
-  right: max(16px, 4vw); bottom: 12%; max-width: min(42%, 30rem);
-  text-align: right; color: #14232B;
+  left: max(16px, 4vw); top: 10%; max-width: min(55%, 40rem);
+  text-align: left; color: #fff; text-shadow: 0 1px 20px rgba(10, 40, 90, 0.25);
   font-family: var(--font-sans); font-weight: 200;
   font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;
   text-wrap: balance;
@@ -417,5 +417,5 @@ html.lb-open { overflow: hidden; }
 @media (max-width: 600px) {
   /* On narrow screens the bottom-left is bright snow, so the caption moves into the blue sky */
   .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
-  .band-question { bottom: 9%; max-width: 62%; }
+  .band-question { top: 9%; max-width: 62%; }
 }
