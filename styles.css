@@ -262,7 +262,7 @@ figcaption {
 /* Full-width gallery: four equal squares per row, two per row on phones */
 .gallery.gallery-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-inline: 8px; }
 .gallery-wide img { aspect-ratio: 1 / 1; }
-.gallery-wide figcaption { padding-inline: 4px; }
+.gallery-wide figcaption { display: none; }   /* captions show only in the lightbox */
 @media (max-width: 720px) { .gallery.gallery-wide { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Found */
@@ -365,9 +365,14 @@ html.lb-open { overflow: hidden; }
   padding: 3.5rem 4rem;
 }
 .lightbox[hidden] { display: none; }
-.lb-fig { margin: 0; display: flex; flex-direction: column; align-items: center; max-width: 100%; max-height: 100%; }
-.lb-fig img { max-width: 100%; max-height: calc(100vh - 9rem); width: auto; height: auto; object-fit: contain; }
-.lb-fig figcaption { color: #E6EDEC; font-size: 1rem; margin-top: 0.9rem; text-align: center; }
+.lb-fig { margin: 0; position: relative; max-width: 100%; max-height: 100%; }
+.lb-fig img { display: block; max-width: 100%; max-height: calc(100vh - 7rem); width: auto; height: auto; }
+/* Caption sits inside the photo, bottom right, like the first photo on the page */
+.lb-fig figcaption {
+  position: absolute; right: 14px; bottom: 12px; max-width: 70%;
+  color: #fff; font-size: 0.9rem; text-align: right; opacity: 0.9;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+}
 .lightbox button {
   position: absolute; background: none; border: 0; color: #E6EDEC; cursor: pointer;
   font: 300 3rem/1 var(--font-sans); padding: 0.4rem 0.8rem; opacity: 0.8;
@@ -379,4 +384,5 @@ html.lb-open { overflow: hidden; }
 @media (max-width: 720px) {
   .lightbox { padding: 3.5rem 0.5rem; }
   .lb-prev, .lb-next { top: auto; bottom: 0.6rem; transform: none; }
+  .lb-fig figcaption { font-size: 0.78rem; right: 10px; bottom: 8px; }
 }
