@@ -306,6 +306,7 @@ figcaption {
 
 /* Schools, then companies */
 .audience + .audience { margin-top: clamp(3.5rem, 8vw, 6rem); }
+@media (max-width: 600px) { .audience + .audience { margin-top: 5.25rem; } }   /* about one extra line on phones */
 
 /* About */
 .about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
