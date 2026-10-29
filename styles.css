@@ -1,24 +1,14 @@
 :root {
-  --paper: #F5F7F4;
-  --ink: #15252E;
-  --sea: #1B4A5E;
+  /* The site always uses its dark palette, whatever the device's light/dark setting */
+  --paper: #0F1B22;
+  --ink: #E6EDEC;
+  --sea: #163C4D;
   --sea-ink: #EEF4F2;
   --saffron: #D9A03A;
-  --muted: #5A6E78;
-  --rule: #C9D4D3;
+  --muted: #9AAEB6;
+  --rule: #2C434E;
   --font-sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --font-accent: "Newsreader", Georgia, "Times New Roman", serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0F1B22; --ink: #E6EDEC; --sea: #163C4D; --sea-ink: #EEF4F2;
-    --muted: #9AAEB6; --rule: #2C434E;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #0F1B22; --ink: #E6EDEC; --sea: #163C4D; --sea-ink: #EEF4F2;
-  --muted: #9AAEB6; --rule: #2C434E;
   color-scheme: dark;
 }
 
