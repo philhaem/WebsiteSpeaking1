@@ -424,7 +424,7 @@ html.lb-open { overflow: hidden; }
 @media (max-width: 600px) {
   /* On narrow screens the bottom-left is bright snow, so the caption moves into the blue sky */
   .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
-  .band-question { top: 7%; max-width: 70%; }
+  .band-question { top: 7%; max-width: 70%; font-size: 0.98rem; }
   /* Phones: trim sky off the top so the question sits just above the mountains */
   .band-parallax { min-height: 12.5rem; }
   .band-parallax picture img { object-position: 50% 100%; }
