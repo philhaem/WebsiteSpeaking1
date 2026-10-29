@@ -445,3 +445,8 @@ html.lb-open { overflow: hidden; }
 .legal a { overflow-wrap: anywhere; }
 mark.todo { background: #ffe9a8; color: #5a4300; padding: 0 0.25em; border-radius: 3px; }
 .form-note { font-size: 0.85rem; color: var(--muted); margin: 0.2rem 0 0.8rem; }
+
+/* Language toggle fades while scrolling (see site.js) */
+.lang-toggle { transition: opacity 0.4s ease; }
+.lang-toggle.is-faded { opacity: 0.2; }
+.lang-toggle.is-faded:hover, .lang-toggle.is-faded:focus-within { opacity: 1; }

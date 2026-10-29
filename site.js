@@ -272,3 +272,12 @@ document.querySelectorAll("[data-open-form]").forEach(function (b) {
     if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
   });
 })();
+
+// Language toggle fades to barely visible once you scroll; full strength again on hover or focus
+(function () {
+  var t = document.querySelector(".lang-toggle");
+  if (!t) return;
+  function update() { t.classList.toggle("is-faded", window.scrollY > 200); }
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+})();
