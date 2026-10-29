@@ -278,28 +278,21 @@ figcaption {
 .gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 @media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
 /* Gallery has its own section with room above and below */
-.gallery-section { padding-block: clamp(2.5rem, 6vw, 5rem); }
-/* Mosaic: fourteen photos in one short, solid band with no gaps.
-   Desktop is 7 x 2 landscape cells, phones 3 x 5 with the first photo spanning two cells.
-   If photos are added or removed, update the column count and the phone layout. */
-.gallery-masonry {
-  display: grid; gap: 6px; padding-inline: 8px;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  aspect-ratio: 14 / 3;
-}
-.gallery-masonry figure { margin: 0; min-width: 0; min-height: 0; }
+/* Gallery runs edge to edge and sits directly on the blue section below */
+.gallery-section { padding-block: clamp(2.5rem, 6vw, 5rem) 0; }
+/* Justified masonry: photos keep their own shape and fill each row exactly.
+   site.js groups them into rows (three on wide screens, more on narrow ones)
+   and regroups when the window size changes. Within a row, each photo's width
+   is proportional to its aspect ratio (--r), so every photo in a row has the same height. */
+.gallery-masonry { display: flex; flex-direction: column; gap: 6px; }
+.gallery-masonry .g-row { display: flex; gap: 6px; }
+.gallery-masonry figure { margin: 0; min-width: 0; flex: var(--r, 1.5) 1 0; aspect-ratio: var(--r, 1.5); }
 .gallery-masonry picture { display: block; width: 100%; height: 100%; cursor: zoom-in; }
 .gallery-masonry img { width: 100%; height: 100%; object-fit: cover; }
-.gallery-masonry picture:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
-@media (max-width: 720px) {
-  .gallery-masonry {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(5, minmax(0, 1fr));
-    aspect-ratio: 4 / 5;
-  }
-  .gallery-masonry figure:first-child { grid-column: span 2; }
-}
+.gallery-masonry picture:focus-visible { outline: 2px solid var(--saffron); outline-offset: -2px; }
+/* Without the script: simple wrapping rows */
+.gallery-masonry:not(.is-justified) { flex-direction: row; flex-wrap: wrap; }
+.gallery-masonry:not(.is-justified) figure { flex-basis: 220px; flex-grow: 1; aspect-ratio: 3 / 2; }
 /* Full-width gallery: four equal squares per row, two per row on phones */
 .gallery.gallery-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-inline: 8px; }
 .gallery-wide img { aspect-ratio: 1 / 1; }

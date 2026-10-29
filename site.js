@@ -147,6 +147,61 @@ document.querySelectorAll("[data-open-form]").forEach(function (b) {
   });
 });
 
+// Gallery: group photos into rows of similar total width, keeping their order.
+// Three rows on wide screens; more rows on narrow screens so photos stay a useful size.
+(function () {
+  var box = document.querySelector(".gallery-masonry");
+  if (!box) return;
+  var figs = Array.prototype.slice.call(box.querySelectorAll("figure"));
+  var ratios = figs.map(function (f) {
+    var img = f.querySelector("img");
+    var r = (+img.getAttribute("width") || 3) / (+img.getAttribute("height") || 2);
+    f.style.setProperty("--r", r.toFixed(4));
+    return r;
+  });
+  var total = ratios.reduce(function (a, b) { return a + b; }, 0);
+  var MIN_ROW_HEIGHT = 130;  // px; below this a narrow screen gets more rows
+
+  // Split ratios into k consecutive groups whose sums are as even as possible
+  function partition(k) {
+    var n = ratios.length, pre = [0];
+    ratios.forEach(function (r, i) { pre.push(pre[i] + r); });
+    var target = total / k, cost = [], cut = [];
+    for (var j = 0; j <= k; j++) { cost.push([]); cut.push([]); for (var i = 0; i <= n; i++) cost[j].push(Infinity); }
+    cost[0][0] = 0;
+    for (j = 1; j <= k; j++) for (i = j; i <= n; i++) for (var m = j - 1; m < i; m++) {
+      var d = pre[i] - pre[m] - target, c = cost[j - 1][m] + d * d;
+      if (c < cost[j][i]) { cost[j][i] = c; cut[j][i] = m; }
+    }
+    var ends = [], e = n;
+    for (j = k; j > 0; j--) { ends.unshift(e); e = cut[j][e]; }
+    return ends;
+  }
+
+  var current = 0;
+  function layout() {
+    var w = box.clientWidth;
+    if (!w) return;
+    var k = Math.max(3, Math.ceil(total * MIN_ROW_HEIGHT / w));
+    k = Math.min(k, figs.length);
+    if (k === current) return;
+    current = k;
+    var ends = partition(k), start = 0;
+    box.innerHTML = "";
+    ends.forEach(function (end) {
+      var row = document.createElement("div");
+      row.className = "g-row";
+      for (var i = start; i < end; i++) row.appendChild(figs[i]);
+      box.appendChild(row);
+      start = end;
+    });
+    box.classList.add("is-justified");
+  }
+  layout();
+  var t;
+  window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(layout, 120); });
+})();
+
 // Gallery lightbox: click a photo to see it large and uncropped
 (function () {
   var figs = Array.prototype.slice.call(document.querySelectorAll(".gallery-masonry figure"));
