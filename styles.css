@@ -259,6 +259,11 @@ figcaption {
 .gallery figure { margin: 0; min-width: 0; }
 .gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 @media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
+/* Full-width gallery: four equal squares per row, two per row on phones */
+.gallery.gallery-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-inline: 8px; }
+.gallery-wide img { aspect-ratio: 1 / 1; }
+.gallery-wide figcaption { padding-inline: 4px; }
+@media (max-width: 720px) { .gallery.gallery-wide { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Found */
 .found, .tint { background: var(--sea); color: var(--sea-ink); }
