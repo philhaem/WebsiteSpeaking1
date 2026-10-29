@@ -224,6 +224,21 @@ figcaption {
 /* Full-width photo with parallax */
 .band-parallax { height: min(70vh, 44vw); min-height: 16rem; padding: 0; }
 .band-parallax picture img { object-position: 50% 80%; }
+/* Question set into the bright snow, bottom right */
+.band-question {
+  position: absolute; z-index: 1; margin: 0;
+  right: max(16px, 4vw); bottom: 12%; max-width: min(42%, 30rem);
+  text-align: right; color: #14232B;
+  font-family: var(--font-sans); font-weight: 200;
+  font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.band-question em { font-style: normal; font-weight: 300; font-size: 1.45em; }
+.band-inner-caption {
+  position: absolute; z-index: 1; margin: 0;
+  left: max(16px, env(safe-area-inset-left, 0px)); bottom: 14px;
+  font-size: 0.85rem; color: #fff; opacity: 0.85; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
 .band-caption { margin: 0.7rem 0 0; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
 
 /* Twelve years */
@@ -385,4 +400,9 @@ html.lb-open { overflow: hidden; }
   .lightbox { padding: 3.5rem 0.5rem; }
   .lb-prev, .lb-next { top: auto; bottom: 0.6rem; transform: none; }
   .lb-fig figcaption { font-size: 0.78rem; right: 10px; bottom: 8px; }
+}
+@media (max-width: 600px) {
+  /* On narrow screens the bottom-left is bright snow, so the caption moves into the blue sky */
+  .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
+  .band-question { bottom: 9%; max-width: 62%; }
 }
