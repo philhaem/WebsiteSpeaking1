@@ -28,6 +28,8 @@ html[data-lang="en"] body [lang="de"] { display: none !important; }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }
+/* Nothing may widen the page sideways (gliding words start outside their line) */
+html, body { overflow-x: clip; }
 body {
   background: var(--paper);
   color: var(--ink);
