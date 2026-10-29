@@ -144,7 +144,7 @@ document.querySelectorAll("[data-open-form]").forEach(function (b) {
 
 // Gallery lightbox: click a photo to see it large and uncropped
 (function () {
-  var figs = Array.prototype.slice.call(document.querySelectorAll(".gallery-wide figure"));
+  var figs = Array.prototype.slice.call(document.querySelectorAll(".gallery-masonry figure"));
   if (!figs.length) return;
   function bigSrc(img) {
     var set = img.getAttribute("srcset");

@@ -274,6 +274,17 @@ figcaption {
 .gallery figure { margin: 0; min-width: 0; }
 .gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 @media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
+/* Gallery has its own section with room above and below */
+.gallery-section { padding-block: clamp(2.5rem, 6vw, 5rem); }
+/* Masonry: four columns of photos at their own shapes, two columns on phones */
+.gallery-masonry { columns: 4; column-gap: 8px; padding-inline: 8px; }
+.gallery-masonry figure { margin: 0 0 8px; break-inside: avoid; }
+.gallery-masonry img { width: 100%; height: auto; }
+.gallery-masonry .tall img { aspect-ratio: 3 / 4; object-fit: cover; }
+.gallery-masonry figcaption { display: none; }   /* captions show only in the lightbox */
+.gallery-masonry picture { cursor: zoom-in; display: block; }
+.gallery-masonry picture:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
+@media (max-width: 720px) { .gallery-masonry { columns: 2; } }
 /* Full-width gallery: four equal squares per row, two per row on phones */
 .gallery.gallery-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-inline: 8px; }
 .gallery-wide img { aspect-ratio: 1 / 1; }
