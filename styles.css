@@ -420,3 +420,12 @@ html.lb-open { overflow: hidden; }
   .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
   .band-question { top: 9%; max-width: 62%; }
 }
+
+/* Legal pages */
+.legal .wrap { max-width: 44rem; }
+.legal h3 { font-size: 1.05rem; font-weight: 400; margin: 2.2rem 0 0.5rem; }
+.legal p { line-height: 1.6; }
+.legal .note { font-size: 0.9rem; color: var(--muted); }
+.legal a { overflow-wrap: anywhere; }
+mark.todo { background: #ffe9a8; color: #5a4300; padding: 0 0.25em; border-radius: 3px; }
+.form-note { font-size: 0.85rem; color: var(--muted); margin: 0.2rem 0 0.8rem; }
