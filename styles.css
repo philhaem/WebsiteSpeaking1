@@ -209,7 +209,7 @@ figcaption {
   max-width: 26ch; margin: 0 auto 0.5rem; text-wrap: balance;
   text-shadow: 0 1px 18px rgba(255, 255, 255, 0.35);
 }
-@media (max-width: 600px) { .band-quote { top: 5%; } .band-quote p { font-size: 1rem; } }
+@media (max-width: 600px) { .band-quote { top: 5%; } .band-quote p { font-size: 1.15rem; } }
 .band-quote cite { font-family: var(--font-accent); font-style: italic; font-size: clamp(0.85rem, 1.4vw, 1.2rem); }
 .band img { width: 100%; }
 .band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
