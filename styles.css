@@ -279,40 +279,26 @@ figcaption {
 @media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
 /* Gallery has its own section with room above and below */
 .gallery-section { padding-block: clamp(2.5rem, 6vw, 5rem); }
-/* Mosaic: eleven photos fill one short, solid band with no gaps.
-   Desktop is 6 x 2 landscape cells, phones 3 x 4. The first photo spans two cells.
-   Photo order follows the HTML. If photos are added or removed, update these layouts. */
+/* Mosaic: fourteen photos in one short, solid band with no gaps.
+   Desktop is 7 x 2 landscape cells, phones 3 x 5 with the first photo spanning two cells.
+   If photos are added or removed, update the column count and the phone layout. */
 .gallery-masonry {
   display: grid; gap: 6px; padding-inline: 8px;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
-  aspect-ratio: 4 / 1;
-  grid-template-areas:
-    "a a b c d e"
-    "f g h i j k";
+  aspect-ratio: 14 / 3;
 }
 .gallery-masonry figure { margin: 0; min-width: 0; min-height: 0; }
 .gallery-masonry picture { display: block; width: 100%; height: 100%; cursor: zoom-in; }
 .gallery-masonry img { width: 100%; height: 100%; object-fit: cover; }
-.gallery-masonry figure:nth-child(1)  { grid-area: a; }
-.gallery-masonry figure:nth-child(2)  { grid-area: b; }
-.gallery-masonry figure:nth-child(3)  { grid-area: c; }
-.gallery-masonry figure:nth-child(4)  { grid-area: d; }
-.gallery-masonry figure:nth-child(5)  { grid-area: e; }
-.gallery-masonry figure:nth-child(6)  { grid-area: f; }
-.gallery-masonry figure:nth-child(7)  { grid-area: g; }
-.gallery-masonry figure:nth-child(8)  { grid-area: h; }
-.gallery-masonry figure:nth-child(9)  { grid-area: i; }
-.gallery-masonry figure:nth-child(10) { grid-area: j; }
-.gallery-masonry figure:nth-child(11) { grid-area: k; }
 .gallery-masonry picture:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
 @media (max-width: 720px) {
   .gallery-masonry {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(4, minmax(0, 1fr));
-    aspect-ratio: 1 / 1;
-    grid-template-areas: "a a b" "c d e" "f g h" "i j k";
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    aspect-ratio: 4 / 5;
   }
+  .gallery-masonry figure:first-child { grid-column: span 2; }
 }
 /* Full-width gallery: four equal squares per row, two per row on phones */
 .gallery.gallery-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-inline: 8px; }
@@ -418,7 +404,7 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 html.lb-open { overflow: hidden; }
 .lightbox {
   position: fixed; inset: 0; z-index: 100;
-  background: rgba(8, 14, 18, 0.94);
+  background: rgba(0, 0, 0, 0.95);
   display: flex; align-items: center; justify-content: center;
   padding: 3.5rem 4rem;
 }
