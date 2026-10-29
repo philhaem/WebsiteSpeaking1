@@ -130,6 +130,27 @@
   relayout();
 })();
 
+// Quote on the walking photo fades in as the photo arrives and out as it leaves
+(function () {
+  var q = document.querySelector(".band-quote");
+  if (!q) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var fig = q.parentNode, ticking = false;
+  function update() {
+    ticking = false;
+    var r = fig.getBoundingClientRect(), vh = window.innerHeight;
+    // 0 when the photo's centre is in the middle of the screen, 1 at the edges
+    var d = Math.abs((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
+    var o = Math.max(0, Math.min(1, (0.62 - d) / 0.3));
+    o = o * o * (3 - 2 * o);
+    q.style.opacity = o.toFixed(3);
+    q.style.transform = "translate3d(0," + ((1 - o) * 14).toFixed(1) + "px,0)";
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+
 // "Get in touch" opens the contact form
 document.querySelectorAll("[data-open-form]").forEach(function (b) {
   b.addEventListener("click", function () {

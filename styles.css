@@ -203,7 +203,22 @@ figcaption {
 
 /* Full-width photo, shown whole */
 .band { padding: 0; }
-.band figure { margin: 0; }
+.band figure { margin: 0; position: relative; }
+/* Quote over the sky of the walking photo */
+.band-quote {
+  position: absolute; left: 0; right: 0; top: 7%;
+  margin: 0; padding-inline: max(16px, env(safe-area-inset-left, 0px));
+  text-align: center; color: #14232B;
+  will-change: opacity, transform;
+}
+.band-quote p {
+  font-family: var(--font-sans); font-weight: 300;
+  font-size: clamp(1.05rem, 2.9vw, 2.5rem); line-height: 1.15; letter-spacing: -0.02em;
+  max-width: 30ch; margin: 0 auto 0.5rem; text-wrap: balance;
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.35);
+}
+@media (max-width: 600px) { .band-quote { top: 5%; } }
+.band-quote cite { font-family: var(--font-accent); font-style: italic; font-size: clamp(0.85rem, 1.4vw, 1.2rem); }
 .band img { width: 100%; }
 .band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
 
