@@ -1,0 +1,447 @@
+:root {
+  /* The site always uses its dark palette, whatever the device's light/dark setting */
+  --paper: #0F1B22;
+  --ink: #E6EDEC;
+  --sea: #163C4D;
+  --sea-ink: #EEF4F2;
+  --saffron: #D9A03A;
+  --muted: #9AAEB6;
+  --rule: #2C434E;
+  --font-sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-accent: "Newsreader", Georgia, "Times New Roman", serif;
+  color-scheme: dark;
+}
+
+/* Language switching: only the active language is shown */
+html[data-lang="de"] body [lang="en"],
+html[data-lang="en"] body [lang="de"] { display: none !important; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+/* Nothing may widen the page sideways (gliding words start outside their line) */
+html, body { overflow-x: clip; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+
+.wrap {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+section { padding-block: clamp(4.5rem, 11vw, 9rem); }
+h2 {
+  font-family: var(--font-sans);
+  font-weight: 200;
+  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  margin: 0 0 2rem;
+}
+h3 {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 1rem;
+}
+p { margin: 0 0 1.1rem; max-width: 38rem; }
+p:last-child { margin-bottom: 0; }
+
+/* Section labels: the one place a different typeface is used */
+.label {
+  font-family: var(--font-accent);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(1.45rem, 2.6vw, 1.95rem);
+  color: var(--saffron);
+  margin: 0 0 1.6rem;
+}
+.center { text-align: center; }
+.center p, .center h2 { margin-left: auto; margin-right: auto; }
+
+/* Language toggle */
+.lang-toggle {
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
+  z-index: 10;
+  display: flex;
+  border-radius: 999px;
+  background: rgba(10, 20, 26, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px;
+}
+.lang-toggle button {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  opacity: 0.75;
+}
+.lang-toggle button[aria-pressed="true"] { background: #fff; color: #15252E; opacity: 1; }
+.lang-toggle button:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
+
+/* Parallax frames: the image moves slower than the page */
+.parallax { position: relative; overflow: hidden; }
+.parallax picture { position: absolute; left: 0; right: 0; top: -12%; height: 124%; will-change: transform; }
+.parallax picture img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Hero */
+.hero {
+  min-height: 100svh;
+  color: #fff;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.hero picture { top: 0; height: 100%; }
+.hero picture img { object-position: 50% 85%; }
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(8, 16, 22, 0.6) 0%, rgba(8, 16, 22, 0.2) 45%, rgba(8, 16, 22, 0) 70%, rgba(8, 16, 22, 0.35) 100%);
+  pointer-events: none;
+}
+.hero .wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: clamp(5.5rem, 13vh, 9rem);
+  text-align: center;
+  will-change: transform;
+}
+.hero blockquote { margin: 0 auto; }
+.hero blockquote p {
+  font-family: var(--font-sans);
+  font-weight: 200;
+  font-size: clamp(2.2rem, 5.6vw, 4.8rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  max-width: 22ch;
+  margin: 0 auto 1.2rem;
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
+}
+.hero cite {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  opacity: 0.9;
+}
+.hero .caption {
+  position: absolute;
+  z-index: 1;
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: 14px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  max-width: 60%;
+  text-align: right;
+  margin: 0;
+}
+
+/* Intro */
+.intro-section .name {
+  font-weight: 200;
+  font-size: clamp(2rem, 5.2vw, 4.2rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+/* What I talk about */
+.intro-section .name { margin: 0 auto clamp(2.5rem, 6vw, 4.5rem); }
+.intro-section .name-label { margin-bottom: 0.5rem; }
+.intro-section .lines p {
+  font-weight: 200;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 26ch;
+  margin: 0 auto 1.4rem;
+  text-wrap: balance;
+}
+
+figcaption {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-top: 0.7rem;
+  line-height: 1.4;
+}
+
+/* Full-width photo, shown whole */
+.band { padding: 0; }
+.band figure { margin: 0; position: relative; }
+/* Quote over the sky of the walking photo */
+.band-quote {
+  position: absolute; left: 0; right: 0; top: 7%;
+  margin: 0; padding-inline: max(16px, env(safe-area-inset-left, 0px));
+  text-align: center; color: #14232B;
+}
+.band-quote p {
+  font-family: var(--font-sans); font-weight: 300;
+  font-size: clamp(1.15rem, 3.2vw, 2.7rem); line-height: 1.1; letter-spacing: -0.02em;
+  max-width: 26ch; margin: 0 auto 0.5rem; text-wrap: balance;
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.35);
+}
+@media (max-width: 600px) { .band-quote { top: 5%; } .band-quote p { font-size: 1rem; } }
+.band-quote cite { font-family: var(--font-accent); font-style: italic; font-size: clamp(0.85rem, 1.4vw, 1.2rem); }
+.band img { width: 100%; }
+.band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+
+/* Full-width photo with parallax */
+.band-parallax { height: min(70vh, 44vw); min-height: 16rem; padding: 0; }
+.band-parallax picture img { object-position: 50% 80%; }
+/* Question set into the bright snow, bottom right */
+.band-question {
+  position: absolute; z-index: 1; margin: 0;
+  left: max(16px, 4vw); top: 3%; max-width: min(60%, 44rem);
+  text-align: left; color: #fff; text-shadow: 0 1px 20px rgba(10, 40, 90, 0.25);
+  font-family: var(--font-sans); font-weight: 200;
+  font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.band-question p { margin: 0; white-space: nowrap; }   /* lines break only where the HTML says */
+.band-question p[lang="de"] { font-size: 0.84em; }   /* the German question is longer, so it stays in the sky */
+.band-question em { font-style: normal; font-weight: 300; font-size: 1.45em; }
+.band-inner-caption {
+  position: absolute; z-index: 1; margin: 0;
+  left: max(16px, env(safe-area-inset-left, 0px)); bottom: 14px;
+  font-size: 0.85rem; color: #fff; opacity: 0.85; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+.band-caption { margin: 0.7rem 0 0; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+
+/* Twelve years */
+.opener {
+  font-weight: 200;
+  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  max-width: 26ch;
+  text-wrap: balance;
+}
+.overview { margin-top: clamp(3rem, 7vw, 5rem); margin-bottom: 0; }
+
+/* Places list */
+.places { list-style: none; margin: 2.5rem auto 0; padding: 0; max-width: 46rem; }
+.places li {
+  font-weight: 300;
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  line-height: 1.3;
+  padding-block: 1rem;
+  border-top: 1px solid var(--rule);
+}
+.places li:last-child { border-bottom: 1px solid var(--rule); }
+
+/* Gallery: two equal columns, every image the same shape, so nothing leaves a gap */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(3rem, 7vw, 5rem);
+  text-align: left;
+}
+.gallery figure { margin: 0; min-width: 0; }
+.gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+@media (max-width: 720px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
+/* Gallery has its own section with room above and below */
+/* Gallery runs edge to edge and sits directly on the blue section below */
+.gallery-section { padding-block: clamp(2.5rem, 6vw, 5rem) 0; }
+/* Justified masonry: photos keep their own shape and fill each row exactly.
+   site.js groups them into rows (three on wide screens, more on narrow ones)
+   and regroups when the window size changes. Within a row, each photo's width
+   is proportional to its aspect ratio (--r), so every photo in a row has the same height. */
+.gallery-masonry { display: flex; flex-direction: column; gap: 6px; }
+.gallery-masonry .g-row { display: flex; gap: 6px; }
+.gallery-masonry figure { margin: 0; min-width: 0; flex: var(--r, 1.5) 1 0; aspect-ratio: var(--r, 1.5); }
+.gallery-masonry picture { display: block; width: 100%; height: 100%; cursor: zoom-in; }
+.gallery-masonry img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-masonry picture:focus-visible { outline: 2px solid var(--saffron); outline-offset: -2px; }
+/* Without the script: simple wrapping rows */
+.gallery-masonry:not(.is-justified) { flex-direction: row; flex-wrap: wrap; }
+.gallery-masonry:not(.is-justified) figure { flex-basis: 220px; flex-grow: 1; aspect-ratio: 3 / 2; }
+/* Full-width gallery: four equal squares per row, two per row on phones */
+.gallery.gallery-wide { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-inline: 8px; }
+.gallery-wide img { aspect-ratio: 1 / 1; }
+.gallery-wide figcaption { display: none; }   /* captions show only in the lightbox */
+@media (max-width: 720px) { .gallery.gallery-wide { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Found */
+.found, .tint { background: var(--sea); color: var(--sea-ink); }
+.tint { --ink: var(--sea-ink); --muted: #B9CACE; --rule: rgba(238, 244, 242, 0.25); }
+.found .wrap { text-align: center; }
+.found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; max-width: 52rem; margin-left: auto; margin-right: auto; }
+.found .found-title { margin-left: auto; margin-right: auto; max-width: none; }
+
+/* Headings and text centred, in a comfortable column */
+.format .wrap > div[lang], .audience { text-align: center; max-width: 52rem; margin-inline: auto; }
+.format .wrap > div[lang] p, .audience p { max-width: none; }
+/* Same reading size as "What I've found" */
+.format .wrap > div[lang] p, .audience p, .about-grid p:not(.label):not(.roles) { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; }
+.found .found-title { font-weight: 200; font-size: clamp(1.9rem, 4.6vw, 3.6rem); line-height: 1.12; letter-spacing: -0.025em; margin: 0 0 2rem; color: var(--sea-ink); }
+
+/* Schools, then companies */
+.audience + .audience { margin-top: clamp(3.5rem, 8vw, 6rem); }
+@media (max-width: 600px) { .audience + .audience { margin-top: 5.25rem; } }   /* about one extra line on phones */
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.about-grid figure { margin: 0; }
+/* Portrait stretches to the height of the text beside it */
+@media (min-width: 721px) {
+  .about-grid { align-items: stretch; }
+  .about-grid figure, .about-grid figure picture { height: 100%; display: block; }
+  .about-grid figure img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 35%; }
+}
+.about-grid .roles { font-weight: 300; font-size: clamp(1.4rem, 2.8vw, 1.9rem); line-height: 1.25; margin-bottom: 1.4rem; }
+@media (max-width: 720px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Contact */
+.contact:not(.tint) { border-top: 1px solid var(--rule); }
+/* Contact and feedback: centred, same reading size as About */
+.contact p:not(.label), .feedback-section p:not(.label) { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; max-width: 44rem; }
+.contact .form { margin-inline: auto; text-align: left; }
+.contact .form p { font-size: inherit; max-width: none; }
+.contact .form .form-note { font-size: 0.85rem; }
+.contact .form .button { justify-self: center; }
+.contact .details { font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin-top: 2rem; }
+/* Feedback sits on the page colour so it reads apart from the blue contact section */
+.feedback-section { border-bottom: 1px solid var(--rule); }
+.feedback-section .button { text-decoration: none; }
+footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
+
+/* Gentle text motion while scrolling */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .parallax picture, .hero .wrap { transform: none !important; }
+}
+
+/* Scroll-linked word fill for pull lines */
+.fill-words .w { display: inline-block; will-change: transform; }
+
+/* Buttons */
+.button {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 1.1rem;
+  text-decoration: none;
+  background: var(--saffron);
+  color: #15252E;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.9rem 1.8rem;
+  cursor: pointer;
+}
+.button:hover { filter: brightness(1.06); }
+.button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* Forms */
+.form { display: grid; gap: 1.2rem; max-width: 40rem; margin-top: 2rem; }
+.form[hidden] { display: none; }
+.form label { display: grid; gap: 0.4rem; font-size: 1rem; font-weight: 400; }
+.form .opt { color: var(--muted); font-weight: 300; }
+.form input, .form textarea {
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 0.8rem 0.9rem;
+  width: 100%;
+}
+.form textarea { min-height: 9rem; resize: vertical; }
+.form textarea[name="feedback"] { min-height: 18rem; }
+.form input:focus, .form textarea:focus { outline: 2px solid var(--saffron); outline-offset: 1px; border-color: transparent; }
+.form .check { display: flex; gap: 0.6rem; align-items: flex-start; font-weight: 300; }
+.form .check input { width: auto; margin-top: 0.35rem; }
+.form .hp { position: absolute; left: -9999px; }
+.form .button { justify-self: start; margin-top: 0.4rem; }
+
+/* Simple pages (feedback, thanks) */
+.page { min-height: 100svh; padding-top: clamp(5rem, 12vh, 8rem); }
+.page .back { font-size: 1rem; color: var(--muted); }
+
+/* Gallery lightbox */
+.gallery-wide picture { cursor: zoom-in; display: block; }
+.gallery-wide picture:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
+html.lb-open { overflow: hidden; }
+.lightbox {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex; align-items: center; justify-content: center;
+  padding: 3.5rem 4rem;
+}
+.lightbox[hidden] { display: none; }
+.lb-fig { margin: 0; position: relative; max-width: 100%; max-height: 100%; }
+.lb-fig img { display: block; max-width: 100%; max-height: calc(100vh - 7rem); width: auto; height: auto; }
+/* Caption sits inside the photo, bottom right, like the first photo on the page */
+.lb-fig figcaption {
+  position: absolute; right: 14px; bottom: 12px; max-width: 70%;
+  color: #fff; font-size: 0.9rem; text-align: right; opacity: 0.9;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+}
+.lightbox button {
+  position: absolute; background: none; border: 0; color: #E6EDEC; cursor: pointer;
+  font: 300 3rem/1 var(--font-sans); padding: 0.4rem 0.8rem; opacity: 0.8;
+}
+.lightbox button:hover, .lightbox button:focus-visible { opacity: 1; }
+.lb-close { top: 0.6rem; right: 0.8rem; }
+.lb-prev { left: 0.4rem; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 0.4rem; top: 50%; transform: translateY(-50%); }
+@media (max-width: 720px) {
+  .lightbox { padding: 3.5rem 0.5rem; }
+  .lb-prev, .lb-next { top: auto; bottom: 0.6rem; transform: none; }
+  .lb-fig figcaption { font-size: 0.78rem; right: 10px; bottom: 8px; }
+}
+@media (max-width: 600px) {
+  /* On narrow screens the bottom-left is bright snow, so the caption moves into the blue sky */
+  .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
+  .band-question { top: 7%; max-width: 70%; font-size: 0.98rem; }
+  /* Phones: trim sky off the top so the question sits just above the mountains */
+  .band-parallax { min-height: 12.5rem; }
+  .band-parallax picture img { object-position: 50% 100%; }
+}
+
+/* Legal pages */
+.legal .wrap { max-width: 44rem; }
+.legal h3 { font-size: 1.05rem; font-weight: 400; margin: 2.2rem 0 0.5rem; }
+.legal p { line-height: 1.6; }
+.legal .note { font-size: 0.9rem; color: var(--muted); }
+.legal a { overflow-wrap: anywhere; }
+mark.todo { background: #ffe9a8; color: #5a4300; padding: 0 0.25em; border-radius: 3px; }
+.form-note { font-size: 0.85rem; color: var(--muted); margin: 0.2rem 0 0.8rem; }
+
+/* Language toggle fades while scrolling (see site.js) */
+.lang-toggle { transition: opacity 0.4s ease; }
+.lang-toggle.is-faded { opacity: 0.2; }
+.lang-toggle.is-faded:hover, .lang-toggle.is-faded:focus-within { opacity: 1; }

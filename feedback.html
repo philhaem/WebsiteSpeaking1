@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="de" data-lang="de" data-title-de="Feedback · Philipp Haemmerle" data-title-en="Feedback · Phil Haemmerle">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feedback · Philipp Haemmerle</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="lang-toggle" aria-label="Sprache / Language">
+  <button type="button" data-set-lang="de" aria-pressed="true">DE</button>
+  <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+</nav>
+
+<main class="page">
+  <div class="wrap">
+    <p class="label">Feedback</p>
+    <h2><span lang="de">Wie war der Vortrag?</span><span lang="en">How was the talk?</span></h2>
+    <p lang="de">Danke, dass du dabei warst. Ich freue mich über ein paar Zeilen dazu, was dir gefallen hat, was hängen geblieben ist oder was ich anders machen könnte.</p>
+    <p lang="en">Thank you for being there. I'd love a few lines on what you liked, what stayed with you, or what I could do differently.</p>
+    <form class="form" name="feedback" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="feedback">
+      <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <label><span><span lang="de">Name</span><span lang="en">Name</span> <span class="opt"><span lang="de">(optional)</span><span lang="en">(optional)</span></span></span><input name="name" autocomplete="name"></label>
+      <label><span><span lang="de">Schule, Unternehmen oder Anlass</span><span lang="en">School, company or event</span> <span class="opt"><span lang="de">(optional)</span><span lang="en">(optional)</span></span></span><input name="event"></label>
+      <label><span><span lang="de">Dein Feedback</span><span lang="en">Your feedback</span></span><textarea name="feedback" rows="10" required></textarea></label>
+      <label class="check"><input type="checkbox" name="may-quote" value="yes"><span><span lang="de">Philipp darf mein Feedback auf seiner Website zitieren.</span><span lang="en">Phil may quote my feedback on his website.</span></span></label>
+      <p class="form-note"><span lang="de">Wie ich mit deinen Angaben umgehe, steht in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span><span lang="en">How I handle your details is explained in the <a href="datenschutz.html">privacy policy</a>.</span></p>
+      <button class="button" type="submit"><span lang="de">Senden</span><span lang="en">Send</span></button>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">© Philipp Haemmerle · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html"><span lang="de">Datenschutz</span><span lang="en">Privacy</span></a></div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>
