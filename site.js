@@ -79,6 +79,11 @@
     el.classList.remove("reveal");
     var words = [];
     Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+      if (node.nodeType === 1) {   // an emphasised word (e.g. <em>) glides as one word
+        node.classList.add("w");
+        words.push({ el: node, dx: 0 });
+        return;
+      }
       if (node.nodeType !== 3) return;
       var frag = document.createDocumentFragment();
       node.textContent.split(/(\s+)/).forEach(function (part) {

@@ -235,6 +235,7 @@ figcaption {
   font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;
   text-wrap: balance;
 }
+.band-question p { margin: 0; }
 .band-question em { font-style: normal; font-weight: 300; font-size: 1.45em; }
 .band-inner-caption {
   position: absolute; z-index: 1; margin: 0;
