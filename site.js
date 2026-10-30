@@ -15,12 +15,21 @@
   }
   var saved = null;
   try { saved = localStorage.getItem("lang"); } catch (e) {}
-  var fromUrl = new URLSearchParams(location.search).get("lang");
-  var browser = (navigator.language || "de").toLowerCase().indexOf("de") === 0 ? "de" : "en";
-  var initial = fromUrl === "de" || fromUrl === "en" ? fromUrl : (saved === "de" || saved === "en" ? saved : browser);
+  // /de and /en open the home page in that language (Netlify serves index.html there)
+  var path = location.pathname.replace(/\/+$/, "").toLowerCase();
+  var fromPath = path === "/de" ? "de" : path === "/en" ? "en" : null;
+  var fromQuery = new URLSearchParams(location.search).get("lang");
+  var initial = fromPath || (fromQuery === "de" || fromQuery === "en" ? fromQuery : null) ||
+    (saved === "de" || saved === "en" ? saved : "en");   // English unless the visitor chose otherwise
+  var isHome = fromPath || path === "" || path === "/index.html";
   setLang(initial);
   document.querySelectorAll("[data-set-lang]").forEach(function (b) {
-    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
+    b.addEventListener("click", function () {
+      var lang = b.getAttribute("data-set-lang");
+      setLang(lang);
+      // keep the address in step on the home page, so a copied link opens in the same language
+      if (isHome && history.replaceState) history.replaceState(null, "", "/" + lang + location.hash);
+    });
   });
 })();
 
