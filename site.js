@@ -127,7 +127,7 @@
     sets.forEach(function (s) {
       var r = s.el.getBoundingClientRect();
       // 0 as the line enters at the bottom, 1 once it has landed
-      var p = (vh - r.top) / (vh * 0.55);   // words land when the line is just above the middle of the screen
+      var p = (vh - r.top) / (vh * 0.4);   // words land when the line is a bit below the middle of the screen
       p = Math.max(0, Math.min(1, p));
       var e = 1 - Math.pow(1 - p, 3);   // ease out
       var k = (1 - e) * SPREAD;
