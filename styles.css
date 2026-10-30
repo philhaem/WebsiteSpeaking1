@@ -185,7 +185,7 @@ p:last-child { margin-bottom: 0; }
   margin: 0 auto 1.4rem;
   text-wrap: balance;
 }
-.intro-section .lines p:not(:last-child) { margin-bottom: 1.75rem; }   /* 25% more room between the intro lines */
+.intro-section .lines p:not(:last-child) { margin-bottom: 2.1rem; }   /* extra room between the intro lines (Phil) */
 
 figcaption {
   font-family: var(--font-sans);
