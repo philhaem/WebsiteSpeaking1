@@ -117,8 +117,8 @@
     var vh = window.innerHeight;
     sets.forEach(function (s) {
       var r = s.el.getBoundingClientRect();
-      // 0 as the line enters at the bottom, 1 once it is just above the middle
-      var p = (vh - r.top) / (vh * (s.slow ? 0.85 : 0.55));   // slow lines take longer to come together
+      // 0 as the line enters at the bottom, 1 once it has landed
+      var p = (vh - r.top) / (vh * (s.slow ? 0.72 : 0.55));   // slow lines take longer to come together; words land when the line is about a quarter from the top
       p = Math.max(0, Math.min(1, p));
       var e = 1 - Math.pow(1 - p, 3);   // ease out
       var k = (1 - e) * SPREAD;
