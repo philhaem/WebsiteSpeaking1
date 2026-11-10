@@ -429,6 +429,18 @@ h2, .hero blockquote p, .intro-section .name, .intro-section .lines p, .opener, 
 /* Simple pages (feedback, thanks) */
 .page { min-height: 100svh; padding-top: clamp(5rem, 12vh, 8rem); }
 .page .back { font-size: 1rem; color: var(--muted); }
+/* Back to the home page, top left (feedback page), mirrors the language switch */
+.home-link {
+  position: fixed; z-index: 10;
+  top: max(14px, env(safe-area-inset-top, 0px));
+  left: max(16px, env(safe-area-inset-left, 0px));
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.6rem; border-radius: 999px;
+  background: rgba(10, 20, 26, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  color: var(--ink); text-decoration: none; font-size: 0.9rem;
+}
+.home-link:hover, .home-link:focus-visible { background: rgba(10, 20, 26, 0.75); }
+.home-link:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
 
 /* Gallery lightbox */
 .gallery-wide picture { cursor: zoom-in; display: block; }
