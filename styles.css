@@ -7,7 +7,9 @@
   --saffron: #D9A03A;
   --muted: #9AAEB6;
   --rule: #2C434E;
-  --font-sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Onest", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Onest Display", "Onest", "Helvetica Neue", Arial, sans-serif;   /* see fonts/fonts.css */
+  --font-snug: "Onest Text", "Onest", "Helvetica Neue", Arial, sans-serif;
   --font-accent: "Newsreader", Georgia, "Times New Roman", serif;
   color-scheme: dark;
 }
@@ -349,6 +351,12 @@ figcaption {
 .feedback-section { border-bottom: 1px solid var(--rule); }
 .feedback-section .button { text-decoration: none; }
 footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
+
+/* Headings, quotes and short lines use the slightly smaller Onest cuts so they break as before */
+h1, h2, h3, .fill-words, .hero blockquote p, .band-question p, .band-quote p { font-family: var(--font-display); }
+.places li, .about-grid .roles { font-family: var(--font-snug); }
+@media (max-width: 600px) { h2 { letter-spacing: -0.04em; } }
+@media (max-width: 370px) { .about-grid .roles { letter-spacing: -0.01em; } }
 
 /* Gentle text motion while scrolling */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
