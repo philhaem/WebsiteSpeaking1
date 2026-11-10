@@ -220,7 +220,10 @@ figcaption {
 .band-parallax { height: min(70vh, 44vw); min-height: 16rem; padding: 0; }
 .band-parallax picture img { object-position: 50% 80%; }
 /* Desktop: the skier photo moves twice as far while scrolling (see site.js), so it gets more room */
-@media (min-width: 721px) { .band-parallax picture { top: -22%; height: 144%; } }
+@media (min-width: 721px) {
+  .band-parallax picture { top: -22%; height: 144%; }
+  .band-parallax picture img { transform-origin: 62% 73%; will-change: transform; }   /* the skier */
+}
 /* Question set into the bright snow, bottom right */
 .band-question {
   position: absolute; z-index: 1; margin: 0;
@@ -352,7 +355,7 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .parallax picture, .hero .wrap { transform: none !important; }
+  .parallax picture, .parallax picture img, .hero .wrap { transform: none !important; }
 }
 
 /* Scroll-linked word fill for pull lines */

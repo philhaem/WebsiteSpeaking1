@@ -56,7 +56,11 @@
       } else {
         var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
         // twice the movement on desktop; phones keep the gentler setting
-        shift = progress * r.height * (window.innerWidth > 720 ? 0.2 : 0.1);
+        var wide = window.innerWidth > 720;
+        shift = progress * r.height * (wide ? 0.2 : 0.1);
+        // desktop: slow zoom towards the skier while scrolling down (1x entering, 1.12x leaving)
+        var img = pic.querySelector("img");
+        if (img) img.style.transform = wide ? "scale(" + (1 + 0.06 * (1 - Math.max(-1, Math.min(1, progress)))).toFixed(4) + ")" : "";
       }
       pic.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
     });
