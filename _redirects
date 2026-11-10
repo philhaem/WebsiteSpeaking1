@@ -7,3 +7,8 @@
 /DE/   /index.html  200
 /EN    /index.html  200
 /EN/   /index.html  200
+
+# Short link for handing out after talks (QR code): philhaemmerle.com/feedback
+/feedback    /feedback.html  200
+/feedback/   /feedback.html  200
+/Feedback    /feedback.html  200

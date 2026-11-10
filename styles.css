@@ -232,10 +232,10 @@ figcaption {
 /* Question set into the bright snow, bottom right */
 .band-question {
   position: absolute; z-index: 1; margin: 0;
-  left: max(16px, 4vw); top: 4%; max-width: min(66%, 50rem);
+  left: max(16px, 4vw); top: 3%; max-width: min(60%, 44rem);
   text-align: left; color: #fff; text-shadow: 0 1px 20px rgba(10, 40, 90, 0.25);
   font-family: var(--font-sans); font-weight: 200;
-  font-size: clamp(1.3rem, 3.8vw, 3.35rem); line-height: 1.19; letter-spacing: -0.025em;
+  font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;   /* size and place as on the live site (Phil, 2026-11-10) */
   text-wrap: balance;
 }
 .band-question p { margin: 0; white-space: nowrap; }   /* lines break only where the HTML says */
@@ -467,7 +467,7 @@ html.lb-open { overflow: hidden; }
   .hero .caption { font-size: 0.5rem; opacity: 0.55; bottom: 8px; }
   /* On narrow screens the bottom-left is bright snow, so the caption moves into the blue sky */
   .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
-  .band-question { top: 5%; max-width: 76%; font-size: 1.08rem; }
+  .band-question { top: 7%; max-width: 70%; font-size: 0.98rem; }
   /* Phones: trim sky off the top so the question sits just above the mountains */
   .band-parallax { min-height: 12.5rem; }
   .band-parallax picture img { object-position: 50% 100%; }
