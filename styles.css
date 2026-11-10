@@ -358,8 +358,7 @@ h1, h2, .fill-words, .opener, .hero blockquote p, .band-question p { font-family
 .places li, .about-grid .roles { font-family: var(--font-snug); }
 /* DM Sans is already tight at large sizes, so the light headings drop most of their negative letter-spacing */
 h2, .hero blockquote p, .intro-section .name, .intro-section .lines p, .opener, .found .found-title, .band-question { letter-spacing: -0.005em; }
-@media (max-width: 600px) { h2 { letter-spacing: -0.04em; } }
-@media (max-width: 370px) { .about-grid .roles { letter-spacing: -0.01em; } .intro-section .lines p { letter-spacing: -0.035em; } }
+@media (max-width: 370px) { .intro-section .lines p { letter-spacing: -0.035em; } }   /* small phones: keeps the intro lines breaking as before */
 
 /* Gentle text motion while scrolling */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
@@ -412,6 +411,16 @@ h2, .hero blockquote p, .intro-section .name, .intro-section .lines p, .opener, 
 .form .check input { width: auto; margin-top: 0.35rem; }
 .form .hp { position: absolute; left: -9999px; }
 .form .button { justify-self: start; margin-top: 0.4rem; }
+/* Close link at the top of a form that opened in place */
+.form .form-close-row { margin: 0 0 -0.6rem; text-align: right; max-width: none; }
+.form-close { background: none; border: 0; padding: 0.3rem 0; color: var(--muted); font: inherit; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; }
+.form-close:hover, .form-close:focus-visible { color: inherit; }
+.form-close:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
+.feedback-section .form { margin-inline: auto; text-align: left; }
+.feedback-section .form p { font-size: inherit; max-width: none; }
+.feedback-section .form .form-note { font-size: 0.85rem; }
+.feedback-section .form .button { justify-self: center; }
+.feedback-section .form textarea[name="feedback"] { min-height: 9rem; }
 
 /* Simple pages (feedback, thanks) */
 .page { min-height: 100svh; padding-top: clamp(5rem, 12vh, 8rem); }

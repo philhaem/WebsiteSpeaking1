@@ -153,35 +153,50 @@
   relayout();
 })();
 
-// "Get in touch" opens the contact form
+// "Get in touch" and "Leave feedback" open their form in place; "Close" folds it away again
 function openForm(b) {
   var f = document.getElementById(b.getAttribute("data-open-form"));
   if (!f) return;
   f.hidden = false;
   b.parentNode.hidden = true;
-  var first = f.querySelector("input:not([type=hidden]):not([name=bot-field])");
-  if (first) first.focus();
+  var first = f.querySelector("input:not([type=hidden]):not([name=bot-field]), textarea");
+  if (first) first.focus({ preventScroll: true });
 }
 document.querySelectorAll("[data-open-form]").forEach(function (b) {
   b.addEventListener("click", function () { openForm(b); });
 });
+document.querySelectorAll("[data-close-form]").forEach(function (c) {
+  c.addEventListener("click", function () {
+    var f = c.closest("form");
+    var b = document.querySelector('[data-open-form="' + f.id + '"]');
+    f.hidden = true;
+    if (!b) return;
+    b.parentNode.hidden = false;
+    var top = b.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight) b.scrollIntoView({ block: "center" });
+    b.focus({ preventScroll: true });
+  });
+});
 
-// Footer "Contact" link: jump to the contact section with the form already open
+// Footer "Contact" and "Feedback" links: jump to that section with the form already open.
+// Other pages link to index.html#contact-form or #feedback-form, handled on arrival.
 (function () {
-  var b = document.querySelector('[data-open-form="contact-form"]');
-  if (!b) return;   // not on the home page: the link loads the home page instead
-  function go() {
-    var section = document.getElementById("contact");
+  function go(id) {
+    var b = document.querySelector('[data-open-form="' + id + '"]');
+    if (!b) return false;   // not on the home page: let the link load it
+    var section = b.closest("section");
     openForm(b);
     section.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
     section.scrollIntoView({ block: "start" });
+    return true;
   }
-  document.querySelectorAll("[data-contact-link]").forEach(function (a) {
-    a.addEventListener("click", function (e) { e.preventDefault(); go(); });
+  document.querySelectorAll("[data-jump-form]").forEach(function (a) {
+    a.addEventListener("click", function (e) { if (go(a.getAttribute("data-jump-form"))) e.preventDefault(); });
   });
-  if (location.hash === "#contact-form") {
+  var id = location.hash.slice(1);
+  if (id === "contact-form" || id === "feedback-form") {
     if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
-    setTimeout(go, 0);
+    setTimeout(function () { go(id); }, 0);
   }
 })();
 
