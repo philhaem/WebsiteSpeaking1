@@ -1,4 +1,5 @@
 :root {
+  /* NEW LOOK (DM Sans) is built into this file. The original look (Bricolage) is looks/original.css: see the note there. */
   /* Line heights were opened up about 10% (headings) and 7% (text) for DM Sans (Phil, 2026-11-10) */
   /* The site always uses its dark palette, whatever the device's light/dark setting */
   --paper: #0F1B22;
