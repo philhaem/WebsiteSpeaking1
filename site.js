@@ -11,22 +11,25 @@
     document.querySelectorAll("[data-set-lang]").forEach(function (b) {
       b.setAttribute("aria-pressed", b.getAttribute("data-set-lang") === lang ? "true" : "false");
     });
-    try { localStorage.setItem("lang", lang); } catch (e) {}
   }
   var saved = null;
-  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  // remembered only when the visitor picks a language (DE/EN button or a /de, /en link)
+  try { saved = localStorage.getItem("lang-choice"); } catch (e) {}
   // /de and /en open the home page in that language (Netlify serves index.html there)
   var path = location.pathname.replace(/\/+$/, "").toLowerCase();
   var fromPath = path === "/de" ? "de" : path === "/en" ? "en" : null;
   var fromQuery = new URLSearchParams(location.search).get("lang");
   var initial = fromPath || (fromQuery === "de" || fromQuery === "en" ? fromQuery : null) ||
-    (saved === "de" || saved === "en" ? saved : "en");   // English unless the visitor chose otherwise
+    (saved === "de" || saved === "en" ? saved : "de");   // German unless the visitor chose otherwise
   var isHome = fromPath || path === "" || path === "/index.html";
   setLang(initial);
+  var picked = fromPath || (fromQuery === "de" || fromQuery === "en" ? fromQuery : null);
+  if (picked) { try { localStorage.setItem("lang-choice", picked); } catch (e) {} }
   document.querySelectorAll("[data-set-lang]").forEach(function (b) {
     b.addEventListener("click", function () {
       var lang = b.getAttribute("data-set-lang");
       setLang(lang);
+      try { localStorage.setItem("lang-choice", lang); } catch (e) {}
       // keep the address in step on the home page, so a copied link opens in the same language
       if (isHome && history.replaceState) history.replaceState(null, "", "/" + lang + location.hash);
     });
@@ -52,7 +55,12 @@
         shift = -r.top * 0.45;            // hero photo lags behind the page
       } else {
         var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
-        shift = progress * r.height * 0.1;
+        // twice the movement on desktop; phones keep the gentler setting
+        var wide = window.innerWidth > 720;
+        shift = progress * r.height * (wide ? 0.2 : 0.1);
+        // desktop: slow zoom towards the skier while scrolling down (1x entering, 1.12x leaving)
+        var img = pic.querySelector("img");
+        if (img) img.style.transform = wide ? "scale(" + (1 + 0.06 * (1 - Math.max(-1, Math.min(1, progress)))).toFixed(4) + ")" : "";
       }
       pic.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
     });
@@ -145,17 +153,52 @@
   relayout();
 })();
 
-// "Get in touch" opens the contact form
+// "Get in touch" and "Leave feedback" open their form in place; "Close" folds it away again
+function openForm(b) {
+  var f = document.getElementById(b.getAttribute("data-open-form"));
+  if (!f) return;
+  f.hidden = false;
+  b.parentNode.hidden = true;
+  var first = f.querySelector("input:not([type=hidden]):not([name=bot-field]), textarea");
+  if (first) first.focus({ preventScroll: true });
+}
 document.querySelectorAll("[data-open-form]").forEach(function (b) {
-  b.addEventListener("click", function () {
-    var f = document.getElementById(b.getAttribute("data-open-form"));
-    if (!f) return;
-    f.hidden = false;
-    b.parentNode.hidden = true;
-    var first = f.querySelector("input:not([type=hidden]):not([name=bot-field])");
-    if (first) first.focus();
+  b.addEventListener("click", function () { openForm(b); });
+});
+document.querySelectorAll("[data-close-form]").forEach(function (c) {
+  c.addEventListener("click", function () {
+    var f = c.closest("form");
+    var b = document.querySelector('[data-open-form="' + f.id + '"]');
+    f.hidden = true;
+    if (!b) return;
+    b.parentNode.hidden = false;
+    var top = b.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight) b.scrollIntoView({ block: "center" });
+    b.focus({ preventScroll: true });
   });
 });
+
+// Footer "Contact" and "Feedback" links: jump to that section with the form already open.
+// Other pages link to index.html#contact-form or #feedback-form, handled on arrival.
+(function () {
+  function go(id) {
+    var b = document.querySelector('[data-open-form="' + id + '"]');
+    if (!b) return false;   // not on the home page: let the link load it
+    var section = b.closest("section");
+    openForm(b);
+    section.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+    section.scrollIntoView({ block: "start" });
+    return true;
+  }
+  document.querySelectorAll("[data-jump-form]").forEach(function (a) {
+    a.addEventListener("click", function (e) { if (go(a.getAttribute("data-jump-form"))) e.preventDefault(); });
+  });
+  var id = location.hash.slice(1);
+  if (id === "contact-form" || id === "feedback-form") {
+    if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+    setTimeout(function () { go(id); }, 0);
+  }
+})();
 
 // Gallery: group photos into rows of similar total width, keeping their order.
 // Three rows on wide screens; more rows on narrow screens so photos stay a useful size.

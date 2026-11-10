@@ -1,4 +1,6 @@
 :root {
+  /* NEW LOOK (DM Sans) is built into this file. The original look (Bricolage) is looks/original.css: see the note there. */
+  /* Line heights were opened up about 10% (headings) and 7% (text) for DM Sans (Phil, 2026-11-10) */
   /* The site always uses its dark palette, whatever the device's light/dark setting */
   --paper: #0F1B22;
   --ink: #E6EDEC;
@@ -7,7 +9,9 @@
   --saffron: #D9A03A;
   --muted: #9AAEB6;
   --rule: #2C434E;
-  --font-sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "DM Sans Display", "DM Sans", "Helvetica Neue", Arial, sans-serif;   /* see fonts/fonts.css */
+  --font-snug: "DM Sans Text", "DM Sans", "Helvetica Neue", Arial, sans-serif;
   --font-accent: "Newsreader", Georgia, "Times New Roman", serif;
   color-scheme: dark;
 }
@@ -26,7 +30,7 @@ body {
   font-family: var(--font-sans);
   font-weight: 300;
   font-size: 1.2rem;
-  line-height: 1.6;
+  line-height: 1.71;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -44,7 +48,7 @@ h2 {
   font-family: var(--font-sans);
   font-weight: 200;
   font-size: clamp(2.6rem, 7vw, 5.6rem);
-  line-height: 1.02;
+  line-height: 1.12;
   letter-spacing: -0.03em;
   text-wrap: balance;
   margin: 0 0 2rem;
@@ -54,10 +58,10 @@ h3 {
   font-weight: 300;
   font-size: clamp(1.8rem, 3.6vw, 2.6rem);
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.21;
   margin: 0 0 1rem;
 }
-.audience h3 { font-size: clamp(2.15rem, 4.4vw, 3.2rem); }
+.audience h3 { font-size: clamp(2.45rem, 5vw, 3.65rem); margin-bottom: clamp(1.4rem, 2.6vw, 2rem); }
 p { margin: 0 0 1.1rem; max-width: 38rem; }
 p:last-child { margin-bottom: 0; }
 
@@ -129,18 +133,19 @@ p:last-child { margin-bottom: 0; }
   position: relative;
   z-index: 1;
   width: 100%;
-  padding-top: clamp(5.5rem, 13vh, 9rem);
+  padding-top: clamp(4.5rem, 10vh, 7.5rem);
   text-align: center;
   will-change: transform;
 }
+.hero .wrap { max-width: 84rem; }   /* room for the bigger quote */
 .hero blockquote { margin: 0 auto; }
 .hero blockquote p {
   font-family: var(--font-sans);
   font-weight: 200;
-  font-size: clamp(2.2rem, 5.6vw, 4.8rem);
-  line-height: 1.06;
+  font-size: clamp(2.2rem, 5.7vw, 4.9rem);   /* a bit bigger than before on wider screens (Phil, 2026-11-10); phones keep their size so the lines break as before */
+  line-height: 1.17;
   letter-spacing: -0.025em;
-  max-width: 22ch;
+  max-width: 13.3em;   /* was 22ch in Bricolage; em keeps the line length when the font changes */
   margin: 0 auto 1.2rem;
   text-wrap: balance;
   text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
@@ -156,7 +161,7 @@ p:last-child { margin-bottom: 0; }
   z-index: 1;
   right: max(16px, env(safe-area-inset-right, 0px));
   bottom: 14px;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   opacity: 0.8;
   max-width: 60%;
   text-align: right;
@@ -166,10 +171,10 @@ p:last-child { margin-bottom: 0; }
 /* Intro */
 .intro-section .name {
   font-weight: 200;
-  font-size: clamp(2rem, 5.2vw, 4.2rem);
-  line-height: 1.12;
+  font-size: clamp(2.4rem, 5.95vw, 4.8rem);
+  line-height: 1.23;
   letter-spacing: -0.025em;
-  max-width: 24ch;
+  max-width: 14.7em;
   text-wrap: balance;
 }
 
@@ -179,9 +184,9 @@ p:last-child { margin-bottom: 0; }
 .intro-section .lines p {
   font-weight: 200;
   font-size: clamp(1.7rem, 4vw, 3rem);
-  line-height: 1.15;
+  line-height: 1.26;
   letter-spacing: -0.02em;
-  max-width: 26ch;
+  max-width: 16.2em;
   margin: 0 auto 1.4rem;
   text-wrap: balance;
 }
@@ -193,7 +198,7 @@ figcaption {
   font-size: 0.95rem;
   color: var(--muted);
   margin-top: 0.7rem;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* Full-width photo, shown whole */
@@ -201,17 +206,17 @@ figcaption {
 .band figure { margin: 0; position: relative; }
 /* Quote over the sky of the walking photo */
 .band-quote {
-  position: absolute; left: 0; right: 0; top: 7%;
+  position: absolute; left: 0; right: 0; top: 4%;
   margin: 0; padding-inline: max(16px, env(safe-area-inset-left, 0px));
   text-align: center; color: #14232B;
 }
 .band-quote p {
   font-family: var(--font-sans); font-weight: 300;
-  font-size: clamp(1.15rem, 3.2vw, 2.7rem); line-height: 1.1; letter-spacing: -0.02em;
-  max-width: 26ch; margin: 0 auto 0.5rem; text-wrap: balance;
+  font-size: clamp(1.3rem, 3.48vw, 2.95rem); line-height: 1.21; letter-spacing: -0.02em;
+  max-width: 16.1em; margin: 0 auto 0.5rem; text-wrap: balance;
   text-shadow: 0 1px 18px rgba(255, 255, 255, 0.35);
 }
-@media (max-width: 600px) { .band-quote { top: 5%; } .band-quote p { font-size: 1.15rem; } }
+@media (max-width: 600px) { .band-quote { top: 3%; } .band-quote p { font-size: 1.28rem; } }
 .band-quote cite { font-family: var(--font-accent); font-style: italic; font-size: clamp(0.85rem, 1.4vw, 1.2rem); }
 .band img { width: 100%; }
 .band figcaption { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
@@ -219,13 +224,18 @@ figcaption {
 /* Full-width photo with parallax */
 .band-parallax { height: min(70vh, 44vw); min-height: 16rem; padding: 0; }
 .band-parallax picture img { object-position: 50% 80%; }
+/* Desktop: the skier photo moves twice as far while scrolling (see site.js), so it gets more room */
+@media (min-width: 721px) {
+  .band-parallax picture { top: -22%; height: 144%; }
+  .band-parallax picture img { transform-origin: 62% 73%; will-change: transform; }   /* the skier */
+}
 /* Question set into the bright snow, bottom right */
 .band-question {
   position: absolute; z-index: 1; margin: 0;
   left: max(16px, 4vw); top: 3%; max-width: min(60%, 44rem);
   text-align: left; color: #fff; text-shadow: 0 1px 20px rgba(10, 40, 90, 0.25);
   font-family: var(--font-sans); font-weight: 200;
-  font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;
+  font-size: clamp(1.15rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -0.025em;   /* size and place as on the live site (Phil, 2026-11-10) */
   text-wrap: balance;
 }
 .band-question p { margin: 0; white-space: nowrap; }   /* lines break only where the HTML says */
@@ -249,9 +259,9 @@ figcaption {
 .opener {
   font-weight: 200;
   font-size: clamp(1.9rem, 4.6vw, 3.6rem);
-  line-height: 1.12;
+  line-height: 1.23;
   letter-spacing: -0.025em;
-  max-width: 26ch;
+  max-width: 16em;
   text-wrap: balance;
 }
 .overview { margin-top: clamp(3rem, 7vw, 5rem); margin-bottom: 0; }
@@ -261,7 +271,7 @@ figcaption {
 .places li {
   font-weight: 300;
   font-size: clamp(1.2rem, 2.4vw, 1.55rem);
-  line-height: 1.3;
+  line-height: 1.39;
   padding-block: 1rem;
   border-top: 1px solid var(--rule);
 }
@@ -304,15 +314,17 @@ figcaption {
 .found, .tint { background: var(--sea); color: var(--sea-ink); }
 .tint { --ink: var(--sea-ink); --muted: #B9CACE; --rule: rgba(238, 244, 242, 0.25); }
 .found .wrap { text-align: center; }
-.found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; max-width: 52rem; margin-left: auto; margin-right: auto; }
+.found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.6; max-width: 52rem; margin-left: auto; margin-right: auto; }
 .found .found-title { margin-left: auto; margin-right: auto; max-width: none; }
 
 /* Headings and text centred, in a comfortable column */
 .format .wrap > div[lang], .audience { text-align: center; max-width: 52rem; margin-inline: auto; }
 .format .wrap > div[lang] p, .audience p { max-width: none; }
+.audience p.price { margin-top: 3.4em; }
+.audiences { padding-bottom: clamp(3rem, 7vw, 5.5rem); }   /* less room after "Price on request" */
 /* Same reading size as "What I've found" */
-.format .wrap > div[lang] p, .audience p, .about-grid p:not(.label):not(.roles) { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; }
-.found .found-title { font-weight: 200; font-size: clamp(1.9rem, 4.6vw, 3.6rem); line-height: 1.12; letter-spacing: -0.025em; margin: 0 0 2rem; color: var(--sea-ink); }
+.format .wrap > div[lang] p, .audience p, .about-grid p:not(.label):not(.roles) { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.6; }
+.found .found-title { font-weight: 200; font-size: clamp(1.9rem, 4.6vw, 3.6rem); line-height: 1.23; letter-spacing: -0.025em; margin: 0 0 clamp(2.6rem, 5vw, 3.6rem); color: var(--sea-ink); }
 
 /* Schools, then companies */
 .audience + .audience { margin-top: clamp(3.5rem, 8vw, 6rem); }
@@ -324,16 +336,18 @@ figcaption {
 /* Portrait stretches to the height of the text beside it */
 @media (min-width: 721px) {
   .about-grid { align-items: stretch; }
-  .about-grid figure, .about-grid figure picture { height: 100%; display: block; }
+  .about-grid figure { position: relative; min-height: 20rem; }   /* the photo takes exactly the text's height */
+  .about-grid figure picture { position: absolute; inset: 0; display: block; }
   .about-grid figure img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 35%; }
 }
-.about-grid .roles { font-weight: 300; font-size: clamp(1.4rem, 2.8vw, 1.9rem); line-height: 1.25; margin-bottom: 1.4rem; }
+.about-grid .roles { font-weight: 300; font-size: clamp(1.6rem, 3.2vw, 2.25rem); line-height: 1.34; margin-bottom: 1.4rem; }
+@media (min-width: 1000px) { .about-grid .roles { white-space: nowrap; } }   /* lines are set by the <br>; the second line may fill the column without wrapping again */
 @media (max-width: 720px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* Contact */
 .contact:not(.tint) { border-top: 1px solid var(--rule); }
 /* Contact and feedback: centred, same reading size as About */
-.contact p:not(.label), .feedback-section p:not(.label) { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.5; max-width: 44rem; }
+.contact p:not(.label), .feedback-section p:not(.label) { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.6; max-width: 44rem; }
 .contact .form { margin-inline: auto; text-align: left; }
 .contact .form p { font-size: inherit; max-width: none; }
 .contact .form .form-note { font-size: 0.85rem; }
@@ -344,12 +358,19 @@ figcaption {
 .feedback-section .button { text-decoration: none; }
 footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 
+/* Headings, quotes and short lines use the slightly smaller DM Sans cuts so they break as before */
+h1, h2, .fill-words, .opener, .hero blockquote p, .band-question p { font-family: var(--font-display); }
+.places li, .about-grid .roles { font-family: var(--font-snug); }
+/* DM Sans is already tight at large sizes, so the light headings drop most of their negative letter-spacing */
+h2, .hero blockquote p, .intro-section .name, .intro-section .lines p, .opener, .found .found-title, .band-question { letter-spacing: -0.005em; }
+@media (max-width: 370px) { .intro-section .lines p { letter-spacing: -0.035em; } }   /* small phones: keeps the intro lines breaking as before */
+
 /* Gentle text motion while scrolling */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .parallax picture, .hero .wrap { transform: none !important; }
+  .parallax picture, .parallax picture img, .hero .wrap { transform: none !important; }
 }
 
 /* Scroll-linked word fill for pull lines */
@@ -395,10 +416,32 @@ footer { padding-block: 2rem 3rem; font-size: 0.85rem; color: var(--muted); }
 .form .check input { width: auto; margin-top: 0.35rem; }
 .form .hp { position: absolute; left: -9999px; }
 .form .button { justify-self: start; margin-top: 0.4rem; }
+/* Close link at the top of a form that opened in place */
+.form .form-close-row { margin: 0 0 -0.6rem; text-align: right; max-width: none; }
+.form-close { background: none; border: 0; padding: 0.2rem; margin-right: -0.2rem; color: var(--muted); cursor: pointer; display: inline-flex; border-radius: 50%; }
+.form-close:hover, .form-close:focus-visible { color: inherit; }
+.form-close:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
+.feedback-section .form { margin-inline: auto; text-align: left; }
+.feedback-section .form p { font-size: inherit; max-width: none; }
+.feedback-section .form .form-note { font-size: 0.85rem; }
+.feedback-section .form .button { justify-self: center; }
+.feedback-section .form textarea[name="feedback"] { min-height: 9rem; }
 
 /* Simple pages (feedback, thanks) */
 .page { min-height: 100svh; padding-top: clamp(5rem, 12vh, 8rem); }
 .page .back { font-size: 1rem; color: var(--muted); }
+/* Back to the home page, top left (feedback page), mirrors the language switch */
+.home-link {
+  position: fixed; z-index: 10;
+  top: max(14px, env(safe-area-inset-top, 0px));
+  left: max(16px, env(safe-area-inset-left, 0px));
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.6rem; border-radius: 999px;
+  background: rgba(10, 20, 26, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  color: var(--ink); text-decoration: none; font-size: 0.9rem;
+}
+.home-link:hover, .home-link:focus-visible { background: rgba(10, 20, 26, 0.75); }
+.home-link:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
 
 /* Gallery lightbox */
 .gallery-wide picture { cursor: zoom-in; display: block; }
@@ -433,6 +476,8 @@ html.lb-open { overflow: hidden; }
   .lb-fig figcaption { font-size: 0.78rem; right: 10px; bottom: 8px; }
 }
 @media (max-width: 600px) {
+  /* Phones: the Rio caption is tiny and faint so it stays out of the photo */
+  .hero .caption { font-size: 0.5rem; opacity: 0.55; bottom: 8px; }
   /* On narrow screens the bottom-left is bright snow, so the caption moves into the blue sky */
   .band-inner-caption { top: 12px; bottom: auto; font-size: 0.75rem; }
   .band-question { top: 7%; max-width: 70%; font-size: 0.98rem; }
@@ -444,7 +489,7 @@ html.lb-open { overflow: hidden; }
 /* Legal pages */
 .legal .wrap { max-width: 44rem; }
 .legal h3 { font-size: 1.05rem; font-weight: 400; margin: 2.2rem 0 0.5rem; }
-.legal p { line-height: 1.6; }
+.legal p { line-height: 1.71; }
 .legal .note { font-size: 0.9rem; color: var(--muted); }
 .legal a { overflow-wrap: anywhere; }
 mark.todo { background: #ffe9a8; color: #5a4300; padding: 0 0.25em; border-radius: 3px; }
