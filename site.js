@@ -52,7 +52,8 @@
         shift = -r.top * 0.45;            // hero photo lags behind the page
       } else {
         var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
-        shift = progress * r.height * 0.1;
+        // twice the movement on desktop; phones keep the gentler setting
+        shift = progress * r.height * (window.innerWidth > 720 ? 0.2 : 0.1);
       }
       pic.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
     });
@@ -146,16 +147,36 @@
 })();
 
 // "Get in touch" opens the contact form
+function openForm(b) {
+  var f = document.getElementById(b.getAttribute("data-open-form"));
+  if (!f) return;
+  f.hidden = false;
+  b.parentNode.hidden = true;
+  var first = f.querySelector("input:not([type=hidden]):not([name=bot-field])");
+  if (first) first.focus();
+}
 document.querySelectorAll("[data-open-form]").forEach(function (b) {
-  b.addEventListener("click", function () {
-    var f = document.getElementById(b.getAttribute("data-open-form"));
-    if (!f) return;
-    f.hidden = false;
-    b.parentNode.hidden = true;
-    var first = f.querySelector("input:not([type=hidden]):not([name=bot-field])");
-    if (first) first.focus();
-  });
+  b.addEventListener("click", function () { openForm(b); });
 });
+
+// Footer "Contact" link: jump to the contact section with the form already open
+(function () {
+  var b = document.querySelector('[data-open-form="contact-form"]');
+  if (!b) return;   // not on the home page: the link loads the home page instead
+  function go() {
+    var section = document.getElementById("contact");
+    openForm(b);
+    section.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+    section.scrollIntoView({ block: "start" });
+  }
+  document.querySelectorAll("[data-contact-link]").forEach(function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); go(); });
+  });
+  if (location.hash === "#contact-form") {
+    if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
+    setTimeout(go, 0);
+  }
+})();
 
 // Gallery: group photos into rows of similar total width, keeping their order.
 // Three rows on wide screens; more rows on narrow screens so photos stay a useful size.
