@@ -203,8 +203,7 @@ figcaption {
 
 /* Full-width photo, shown whole */
 .band { padding: 0; }
-.band figure { margin: 0; position: relative; overflow: hidden; }
-.band figure img { display: block; will-change: transform; }   /* drifts and slowly zooms while scrolling (site.js), like the skier photo */
+.band figure { margin: 0; position: relative; }
 /* Quote over the sky of the walking photo */
 .band-quote {
   position: absolute; left: 0; right: 0; top: 4%;
@@ -371,7 +370,7 @@ h2, .hero blockquote p, .intro-section .name, .intro-section .lines p, .opener, 
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .parallax picture, .parallax picture img, .band figure img, .hero .wrap { transform: none !important; }
+  .parallax picture, .parallax picture img, .hero .wrap { transform: none !important; }
 }
 
 /* Scroll-linked word fill for pull lines */
