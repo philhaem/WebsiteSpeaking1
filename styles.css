@@ -203,7 +203,8 @@ figcaption {
 
 /* Full-width photo, shown whole */
 .band { padding: 0; }
-.band figure { margin: 0; position: relative; }
+.band figure { margin: 0; position: relative; overflow: hidden; }
+.band figure img { display: block; will-change: transform; }   /* drifts and slowly zooms while scrolling (site.js), like the skier photo */
 /* Quote over the sky of the walking photo */
 .band-quote {
   position: absolute; left: 0; right: 0; top: 4%;
@@ -314,7 +315,7 @@ figcaption {
 .found, .tint { background: var(--sea); color: var(--sea-ink); }
 .tint { --ink: var(--sea-ink); --muted: #B9CACE; --rule: rgba(238, 244, 242, 0.25); }
 .found .wrap { text-align: center; }
-.found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.6; max-width: 52rem; margin-left: auto; margin-right: auto; }
+.found p { font-size: clamp(1.2rem, 2.4vw, 1.55rem); line-height: 1.6; max-width: 56rem; margin-left: auto; margin-right: auto; }
 .found .found-title { margin-left: auto; margin-right: auto; max-width: none; }
 
 /* Headings and text centred, in a comfortable column */
@@ -370,7 +371,7 @@ h2, .hero blockquote p, .intro-section .name, .intro-section .lines p, .opener, 
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .parallax picture, .parallax picture img, .hero .wrap { transform: none !important; }
+  .parallax picture, .parallax picture img, .band figure img, .hero .wrap { transform: none !important; }
 }
 
 /* Scroll-linked word fill for pull lines */
