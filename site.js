@@ -72,8 +72,8 @@
       if (r.bottom < 0 || r.top > vh) return;
       var progress = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2)));
       var wide = window.innerWidth > 720;
-      var scale = wide ? 1.16 + 0.06 * (1 - progress) : 1.1;
-      var shift = progress * r.height * (wide ? 0.07 : 0.045);
+      var scale = wide ? 1.16 + 0.06 * (1 + progress) : 1.1;   // reversed (Phil, 2026-11-21): starts zoomed in, zooms out
+      var shift = -progress * r.height * (wide ? 0.07 : 0.045);
       img.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0) scale(" + scale.toFixed(4) + ")";
     });
     if (heroText) {
